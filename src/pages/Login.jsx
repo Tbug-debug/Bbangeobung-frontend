@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import Btn from '../components/Btn';
 import styled from 'styled-components';
 import SignInput from '../components/SignInput';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  const navigate = useNavigate();
   const [inputId, setInputId] = useState('');
   const [inputPassword, setInputPassword] = useState('');
 
@@ -48,7 +50,9 @@ function Login() {
           <CheckReg checkReg={checkPasswordReg}>{alertPassword}</CheckReg>
         </Form>
         <BtnWrapper>
-          <Btn signUp>이메일로 회원가입</Btn>
+          <Btn signUp onClick={() => navigate('/signup')}>
+            이메일로 회원가입
+          </Btn>
           <Btn kakao>카카오 회원 가입</Btn>
           <Btn type="submit" form="userInfoSubmit">
             로그인 하기

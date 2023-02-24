@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Btn from '../components/Btn';
 import SignInput from '../components/SignInput';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
+  const navigate = useNavigate();
   return (
     <>
       <SignupContainer>
@@ -23,7 +25,7 @@ const Signup = () => {
           <CheckReg>Nick Name Check</CheckReg>
         </InputWrapper>
         <BtnWrapper>
-          <Btn smBtn danger>
+          <Btn onClick={() => navigate(-1)} smBtn danger>
             취소
           </Btn>
           <Btn smBtn>회원가입</Btn>
