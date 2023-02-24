@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import bongbbang from "../assets/img/bongbbang.png";
+import React from 'react';
+import styled from 'styled-components';
+import bongbbang from '../assets/img/bongbbang.png';
 
 const Layout = ({ children }) => {
   return (
@@ -76,7 +76,7 @@ const TeamInfo = styled.div`
   position: fixed;
   bottom: 3.125rem;
   left: 12.5rem;
-  font-family: "KCC-Ganpan";
+  font-family: 'KCC-Ganpan';
   @media screen and (max-width: 625px) {
     display: none;
   }
@@ -92,13 +92,12 @@ const DivLayout2 = styled.div`
   @media screen and (max-width: 420px) {
     width: 100%;
     margin: auto;
-    background-color: #f9f3ea;
   }
   width: 31.25rem;
   height: 100vh;
   position: relative;
   margin-left: 0 auto;
-  background-color: #f9f3ea;
+  background-color: ${({ theme }) => theme.color.component_bg};
   display: flex;
   flex-direction: column;
   z-index: 1;
