@@ -5,10 +5,12 @@ import GlobalStyle from "./styles/GlobalStyle";
 import theme from "./styles/Theme/Theme";
 import { ThemeProvider } from "styled-components";
 import "./App.css";
+import Reset from "./styles/Reset";
 
 function App() {
   return (
     <>
+      <Reset />
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <Layout>

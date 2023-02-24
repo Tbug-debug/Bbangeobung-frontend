@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import bongbbang from '../assets/img/bongbbang.png';
+import React from "react";
+import styled from "styled-components";
+import bongbbang from "../assets/img/bongbbang.png";
 
 const Layout = ({ children }) => {
   return (
@@ -76,7 +76,7 @@ const TeamInfo = styled.div`
   position: fixed;
   bottom: 3.125rem;
   left: 12.5rem;
-  font-family: 'KCC-Ganpan';
+  font-family: "KCC-Ganpan";
   @media screen and (max-width: 625px) {
     display: none;
   }
