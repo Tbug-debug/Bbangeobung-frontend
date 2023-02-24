@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Btn from '../components/Btn';
 import styled from 'styled-components';
+import SignInput from '../components/SignInput';
 
 function Login() {
   const [inputId, setInputId] = useState('');
@@ -41,9 +42,9 @@ function Login() {
       <LogInContainer>
         <Title>빵 어 붕</Title>
         <Form id="userInfoSubmit">
-          <LogInInput value={inputId} onChange={(e) => inputIdHandler(e)} />
+          <SignInput value={inputId} onChange={(e) => inputIdHandler(e)} />
           <CheckReg checkReg={checkIdReg}>{alertId}</CheckReg>
-          <LogInInput value={inputPassword} onChange={(e) => inputPasswordHandler(e)} type="password" />
+          <SignInput value={inputPassword} onChange={(e) => inputPasswordHandler(e)} type="password" />
           <CheckReg checkReg={checkPasswordReg}>{alertPassword}</CheckReg>
         </Form>
         <BtnWrapper>
@@ -73,17 +74,6 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 390px;
-`;
-
-const LogInInput = styled.input`
-  height: 39px;
-  margin-top: 10px;
-  padding-left: 12px;
-  border: none;
-  border-radius: 12px;
-  background-color: ${({ theme }) => theme.color.input_bg};
-  font-size: 19px;
-  font-weight: bold;
 `;
 
 const CheckReg = styled.span`
