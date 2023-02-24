@@ -89,7 +89,6 @@ const LogInInput = styled.input`
 const CheckReg = styled.span`
   height: 30px;
   margin: 4px 0 0 8px;
-  font-weight: bold;
   color: ${(props) => (props.checkReg ? '#609966' : props.theme.color.btn_danger)};
 `;
 
