@@ -9,11 +9,8 @@
     "axios": "^1.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
-    "react-icons": "^4.7.1",
-=======
     "react-icon": "^1.0.0",
->>>>>>> origin/Hangyoel
+    "react-icons": "^4.7.1",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
