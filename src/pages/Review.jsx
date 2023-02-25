@@ -1,22 +1,30 @@
-import React from "react";
-import styled from "styled-components";
-import Btn from "../components/Btn";
-import Navbar from "../components/Navbar";
+import React from 'react';
+import styled from 'styled-components';
+import Btn from '../components/Btn';
+import Navbar from '../components/Navbar';
+import NavWrapper from '../components/NavWrapper';
+import { FiChevronLeft } from 'react-icons/fi';
 
 function Review() {
   return (
-    <ReviewContainer>
-      <Navbar registration={"등록하기 아이콘"} menue={"메뉴 아이콘"} />
-      <ReviewBox>
-        <ReviewImageBox></ReviewImageBox>
-        <ReviewTextBox>
-          <ReviewButtonReport>
-            <Btn smBtn report children={"신고하기"} />
-          </ReviewButtonReport>
-          <span>djfkdlafjsdak</span>
-        </ReviewTextBox>
-      </ReviewBox>
-    </ReviewContainer>
+    <>
+      <NavWrapper>
+        <Navbar>
+          <FiChevronLeft size={40}></FiChevronLeft>
+        </Navbar>
+      </NavWrapper>
+      <ReviewContainer>
+        <ReviewBox>
+          <ReviewImageBox></ReviewImageBox>
+          <ReviewTextBox>
+            <ReviewButtonReport>
+              <Btn smBtn report children={'신고하기'} />
+            </ReviewButtonReport>
+            <span>djfkdlafjsdak</span>
+          </ReviewTextBox>
+        </ReviewBox>
+      </ReviewContainer>
+    </>
   );
 }
 

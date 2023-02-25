@@ -1,24 +1,34 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+import NavWrapper from '../components/NavWrapper';
+import Navbar from '../components/Navbar';
+import { FiChevronLeft } from 'react-icons/fi';
 
 function user() {
   return (
-    <UserHeader>
-      <UserImageBannerBox>
-        <UserImageBanner></UserImageBanner>
-      </UserImageBannerBox>
-      <UserBox>
-        <UserInfo>
-          <UserNicName>닉네임</UserNicName>
-        </UserInfo>
-        <UserInfo>
-          <UserImail>유저 이메일</UserImail>
-        </UserInfo>
-        <UserWriteInfo>
-          <div>내가쓴 목록</div>
-        </UserWriteInfo>
-      </UserBox>
-    </UserHeader>
+    <>
+      <NavWrapper>
+        <Navbar>
+          <FiChevronLeft size={40}></FiChevronLeft>
+        </Navbar>
+      </NavWrapper>
+      <UserHeader>
+        <UserImageBannerBox>
+          <UserImageBanner></UserImageBanner>
+        </UserImageBannerBox>
+        <UserBox>
+          <UserInfo>
+            <UserNicName>닉네임</UserNicName>
+          </UserInfo>
+          <UserInfo>
+            <UserImail>유저 이메일</UserImail>
+          </UserInfo>
+          <UserWriteInfo>
+            <div>내가쓴 목록</div>
+          </UserWriteInfo>
+        </UserBox>
+      </UserHeader>
+    </>
   );
 }
 const UserHeader = styled.div`

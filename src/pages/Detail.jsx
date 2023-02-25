@@ -1,16 +1,26 @@
-import React from "react";
-import styled from "styled-components";
-import Btn from "../components/Btn";
-import Navbar from "../components/Navbar";
+import React from 'react';
+import styled from 'styled-components';
+import Btn from '../components/Btn';
+import Navbar from '../components/Navbar';
+import NavWrapper from '../components/NavWrapper';
+import { FiChevronLeft } from 'react-icons/fi';
+import { MdOutlineReport } from 'react-icons/md';
 
 function Detail() {
   return (
     <DetailBox>
-      <Navbar registration={"등록하기 아이콘"} menue={"메뉴 아이콘"} />
+      <NavWrapper>
+        <Navbar>
+          <FiChevronLeft size={40}></FiChevronLeft>
+        </Navbar>
+        <Navbar>
+          <MdOutlineReport size={37}></MdOutlineReport>
+        </Navbar>
+      </NavWrapper>
       <DetailContentBox>
         <Mpas>지도</Mpas>
         <ImageAndContentsBox></ImageAndContentsBox>
-        <Btn children={"리뷰열기"}></Btn>
+        <Btn children={'리뷰열기'}></Btn>
       </DetailContentBox>
     </DetailBox>
   );
