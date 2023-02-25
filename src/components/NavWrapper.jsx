@@ -15,6 +15,7 @@ const NavbarWrapper = styled.div`
   justify-content: space-between;
   width: 500px;
   background-color: ${({ theme }) => theme.color.nav_bg};
+  z-index: 10;
 `;
 
 export default NavWrapper;

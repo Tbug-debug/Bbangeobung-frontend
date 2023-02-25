@@ -44,6 +44,13 @@ const BtnStyle = styled.button`
     css`
       background-color: ${({ theme }) => theme.color.btn_report};
     `}
+    ${(props) =>
+    props.delete &&
+    css`
+      width: 86px;
+      height: 35px;
+      background-color: ${({ theme }) => theme.color.btn_danger};
+    `}
 `;
 
 export default Btn;
