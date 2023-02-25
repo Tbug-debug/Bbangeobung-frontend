@@ -19,9 +19,9 @@ const useLoginInput = (value, initial, reject, success, Reg, samePw) => {
     [Reg, reject, success]
   );
 
-  const checkSamePw = (e) => {
+  const checkSame = (e) => {
     setInput(e.target.value);
-    if (input !== samePw) {
+    if (e.target.value !== samePw) {
       setAlert(reject);
       setCheckReg(false);
     } else {
@@ -30,7 +30,7 @@ const useLoginInput = (value, initial, reject, success, Reg, samePw) => {
     }
   };
 
-  return [input, setInputHandler, alert, checkReg, checkSamePw];
+  return [input, setInputHandler, alert, checkReg, checkSame];
 };
 
 export default useLoginInput;

@@ -19,7 +19,8 @@ const Signup = () => {
     '고마웡',
     pwReg
   );
-  const [inputCheckPw, , alertCheckPw, checkPwRegs, checkSamePw] = useLoginInput(
+
+  const [inputCheckPw, , alertCheckPw, checkPwRegs, checkSame] = useLoginInput(
     '',
     '위와 같은 Password를 입력해줭',
     '달랑 😢',
@@ -49,7 +50,7 @@ const Signup = () => {
           <SignInput value={inputPassword} onChange={inputPasswordHandler} type="password" />
           <CheckReg checkReg={checkPwReg}>{alertPw}</CheckReg>
           <SignSpan>Password Check</SignSpan>
-          <SignInput value={inputCheckPw} onChange={checkSamePw} type="password" />
+          <SignInput value={inputCheckPw} onChange={checkSame} type="password" />
           <CheckReg checkReg={checkPwRegs}>{alertCheckPw}</CheckReg>
           <SignSpan>Nick Name</SignSpan>
           <SignInput value={inputUserName} onChange={inputUserNameHandler} />
