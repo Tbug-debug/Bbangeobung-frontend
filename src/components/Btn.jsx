@@ -2,7 +2,6 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 const Btn = ({ children, ...props }) => {
-  console.log(props);
   return (
     <>
       <BtnStyle {...props}>{children}</BtnStyle>
@@ -11,18 +10,18 @@ const Btn = ({ children, ...props }) => {
 };
 
 const BtnStyle = styled.button`
-  width: 375px;
-  height: 39px;
+  width: 23.4375rem;
+  height: 2.4375rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   background-color: ${({ theme }) => theme.color.btn_success};
   font-weight: bold;
   cursor: pointer;
   ${(props) =>
     props.smBtn &&
     css`
-      width: 187px;
-      height: 39px;
+      width: 11.6875rem;
+      height: 2.4375rem;
     `}
   ${(props) =>
     props.danger &&
