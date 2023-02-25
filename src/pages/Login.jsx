@@ -1,53 +1,45 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Btn from '../components/Btn';
 import styled from 'styled-components';
+import SignInput from '../components/SignInput';
+import { useNavigate } from 'react-router-dom';
+import useLoginInput from '../hooks/useLoginInput';
 
 function Login() {
-  const [inputId, setInputId] = useState('');
-  const [inputPassword, setInputPassword] = useState('');
+  const navigate = useNavigate();
 
-  const [alertId, setAlertId] = useState('ID를 입력해줭');
-  const [alertPassword, setAlertPassword] = useState('Password를 입력해줭');
+  const idReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const [inputId, inputIdHandler, alertId, checkIdReg] = useLoginInput(
+    '',
+    'ID를 입력해줭',
+    '이메일 형식으로 작성해줭',
+    '팥이 좋아 슈크림이 좋아?',
+    idReg
+  );
 
-  const [checkIdReg, setCheckIdReg] = useState(false);
-  const [checkPasswordReg, setCheckPasswordReg] = useState(false);
-
-  const inputIdHandler = (e) => {
-    setInputId(e.target.value);
-    const idReg = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-    if (!idReg.test(e.target.value)) {
-      setAlertId('이메일 형식으로 작성해줭');
-      setCheckIdReg(false);
-    } else {
-      setAlertId('팥이 좋아 슈크림이 좋아?');
-      setCheckIdReg(true);
-    }
-  };
-
-  const inputPasswordHandler = (e) => {
-    setInputPassword(e.target.value);
-    const passwordReg = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
-    if (!passwordReg.test(e.target.value)) {
-      setAlertPassword('영어 소문자와 숫자, 특수문자 조합의 8-20자로 입력해줭');
-      setCheckPasswordReg(false);
-    } else {
-      setAlertPassword("나는 타코야키! Mommy don't know~ daddy's getting hot 🔥");
-      setCheckPasswordReg(true);
-    }
-  };
+  const pwReg = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
+  const [inputPassword, inputPasswordHandler, alertPw, checkPwReg] = useLoginInput(
+    '',
+    'Password를 입력해줭',
+    '영어 소문자와 숫자, 특수문자 조합의 8-20자로 입력해줭',
+    "나는 타코야키! Mommy don't know~ daddy's getting hot 🔥",
+    pwReg
+  );
 
   return (
     <>
       <LogInContainer>
         <Title>빵 어 붕</Title>
         <Form id="userInfoSubmit">
-          <LogInInput value={inputId} onChange={(e) => inputIdHandler(e)} />
+          <SignInput value={inputId} onChange={inputIdHandler} />
           <CheckReg checkReg={checkIdReg}>{alertId}</CheckReg>
-          <LogInInput value={inputPassword} onChange={(e) => inputPasswordHandler(e)} type="password" />
-          <CheckReg checkReg={checkPasswordReg}>{alertPassword}</CheckReg>
+          <SignInput value={inputPassword} onChange={inputPasswordHandler} type="password" />
+          <CheckReg checkReg={checkPwReg}>{alertPw}</CheckReg>
         </Form>
         <BtnWrapper>
-          <Btn signUp>이메일로 회원가입</Btn>
+          <Btn signUp onClick={() => navigate('/signup')}>
+            이메일로 회원가입
+          </Btn>
           <Btn kakao>카카오 회원 가입</Btn>
           <Btn type="submit" form="userInfoSubmit">
             로그인 하기
@@ -73,17 +65,6 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 390px;
-`;
-
-const LogInInput = styled.input`
-  height: 39px;
-  margin-top: 10px;
-  padding-left: 12px;
-  border: none;
-  border-radius: 12px;
-  background-color: ${({ theme }) => theme.color.input_bg};
-  font-size: 19px;
-  font-weight: bold;
 `;
 
 const CheckReg = styled.span`
