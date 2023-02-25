@@ -1,8 +1,7 @@
-import React from "react";
-import styled, { css } from "styled-components";
+import React from 'react';
+import styled, { css } from 'styled-components';
 
 const Btn = ({ children, ...props }) => {
-  console.log(props);
   return (
     <>
       <BtnStyle {...props}>{children}</BtnStyle>
