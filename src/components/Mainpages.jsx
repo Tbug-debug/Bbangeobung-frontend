@@ -1,12 +1,21 @@
-import React from "react";
-import styled from "styled-components";
-import List from "./List";
-import Navbar from "./Navbar";
+import React from 'react';
+import { FiMenu, FiEdit } from 'react-icons/fi';
+import styled from 'styled-components';
+import List from './List';
+import Navbar from './Navbar';
+import NavWrapper from './NavWrapper';
 
 function Mainpages() {
   return (
     <MainPageList>
-      <Navbar registration={"등록하기 아이콘"} menue={"메뉴 아이콘"} />
+      <NavWrapper>
+        <Navbar>
+          <FiEdit size={40} />
+        </Navbar>
+        <Navbar>
+          <FiMenu size={40} />
+        </Navbar>
+      </NavWrapper>
       <ListBox>
         <List></List>
         <List></List>

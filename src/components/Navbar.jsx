@@ -1,25 +1,20 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-function Navbar({ registration, menue }) {
+function Navbar({ children }) {
   return (
     <NavBar>
-      <NavBarIcon>{registration}</NavBarIcon>
-      <NavBarIcon>{menue}</NavBarIcon>
+      <NavBarIcon>{children}</NavBarIcon>
     </NavBar>
   );
 }
 
 const NavBar = styled.div`
-  //border: 1px solid black;
-  height: 100px;
-  display: flex;
-  justify-content: space-around;
-  background-color: ${({ theme }) => theme.color.nav_bg};
+  height: 80px;
 `;
 
 const NavBarIcon = styled.div`
-  padding-top: 20px;
+  margin: 20px 25px;
 `;
 
 export default Navbar;
