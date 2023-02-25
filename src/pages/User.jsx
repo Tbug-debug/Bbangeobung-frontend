@@ -32,8 +32,9 @@ function user() {
   );
 }
 const UserHeader = styled.div`
-  text-align: center;
   height: 100%;
+  margin-top: 50px;
+  text-align: center;
   overflow: hidden;
 `;
 

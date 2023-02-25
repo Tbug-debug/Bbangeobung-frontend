@@ -37,6 +37,7 @@ const DetailContentBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 80px;
   margin-bottom: 50px;
 `;
 

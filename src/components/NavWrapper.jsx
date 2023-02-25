@@ -10,9 +10,10 @@ const NavWrapper = ({ children }) => {
 };
 
 const NavbarWrapper = styled.div`
+  position: fixed;
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 500px;
   background-color: ${({ theme }) => theme.color.nav_bg};
 `;
 
