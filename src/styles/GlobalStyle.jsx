@@ -20,6 +20,13 @@ const GlobalStyle = createGlobalStyle`
 body {
   font-family: 'KCC-Ganpan';
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
 `;
 
 export default GlobalStyle;

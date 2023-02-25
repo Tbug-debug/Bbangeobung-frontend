@@ -18,7 +18,18 @@ export const postLogin = async (data) => {
       "https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/user/login",
       data
     );
-    console.log(response);
+    localStorage.setItem("accessToken", response.headers.authorization);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const showStore = async () => {
+  try {
+    const response = await axios.get(
+      "https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/store/"
+    );
+    return response;
   } catch (e) {
     console.log(e);
   }

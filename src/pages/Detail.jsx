@@ -1,17 +1,20 @@
-import React from 'react';
-import styled from 'styled-components';
-import Btn from '../components/Btn';
-import Navbar from '../components/Navbar';
-import NavWrapper from '../components/NavWrapper';
-import { FiChevronLeft } from 'react-icons/fi';
-import { MdOutlineReport } from 'react-icons/md';
+import React from "react";
+import styled from "styled-components";
+import Btn from "../components/Btn";
+import Navbar from "../components/Navbar";
+import NavWrapper from "../components/NavWrapper";
+import { FiChevronLeft } from "react-icons/fi";
+import { MdOutlineReport } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 function Detail() {
   return (
     <DetailBox>
       <NavWrapper>
         <Navbar>
-          <FiChevronLeft size={40}></FiChevronLeft>
+          <Link to={"/"}>
+            <FiChevronLeft size={40}></FiChevronLeft>
+          </Link>
         </Navbar>
         <Navbar>
           <MdOutlineReport size={37}></MdOutlineReport>
@@ -20,7 +23,7 @@ function Detail() {
       <DetailContentBox>
         <Mpas>지도</Mpas>
         <ImageAndContentsBox></ImageAndContentsBox>
-        <Btn children={'리뷰열기'}></Btn>
+        <Btn children={"리뷰열기"}></Btn>
       </DetailContentBox>
     </DetailBox>
   );
