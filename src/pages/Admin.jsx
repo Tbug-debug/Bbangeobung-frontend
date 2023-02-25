@@ -15,6 +15,7 @@ function Admin() {
 const ReportBox = styled.div`
   height: 100%;
   padding: 50px;
+  overflow: hidden;
 `;
 
 const ReportBoxInside = styled.div`
