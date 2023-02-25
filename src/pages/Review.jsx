@@ -10,19 +10,10 @@ function Review() {
       <ReviewBox>
         <ReviewImageBox></ReviewImageBox>
         <ReviewTextBox>
-          <Btn children={"신고하기"} />
-        </ReviewTextBox>
-      </ReviewBox>
-      <ReviewBox>
-        <ReviewImageBox></ReviewImageBox>
-        <ReviewTextBox>
-          <Btn />
-        </ReviewTextBox>
-      </ReviewBox>
-      <ReviewBox>
-        <ReviewImageBox></ReviewImageBox>
-        <ReviewTextBox>
-          <Btn />
+          <ReviewButtonReport>
+            <Btn smBtn report children={"신고하기"} />
+          </ReviewButtonReport>
+          <span>djfkdlafjsdak</span>
         </ReviewTextBox>
       </ReviewBox>
     </ReviewContainer>
@@ -54,6 +45,15 @@ const ReviewTextBox = styled.div`
   border: 0.125rem solid black;
   height: 15.625rem;
   width: 15.625rem;
+`;
+
+const ReviewButtonReport = styled.div`
+  border-bottom: 2px solid black;
+  padding: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 
 export default Review;
