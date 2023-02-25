@@ -14,7 +14,8 @@ function Register() {
   const [fields, setFields] = useState([
     { id: 1, selectValue: "1", inputValue: "" },
   ]);
-  const [input, setInput] = useState("");
+  const [long, setLong] = useState("");
+  const [lati, setLati] = useState("");
   const [body, setBody] = useState("");
   const [formdata, setFormData] = useState([]);
 
@@ -42,8 +43,12 @@ function Register() {
     setFields(newFields);
   }
 
-  function onTextInput(e) {
-    setInput(e.target.value);
+  function onLongInput(e) {
+    setLong(e.target.value);
+  }
+
+  function onLatiInput(e) {
+    setLati(e.target.value);
   }
 
   function onBodyInput(e) {
@@ -53,18 +58,20 @@ function Register() {
   function onChangeimge(e) {
     const img = e.target.files[0];
     const formData = new FormData();
-    formData.append("file", img);
+    formData.append("imageFile", img);
     setFormData(formData);
-    for (const keyValue of formData) console.log(keyValue);
   }
 
   function handleSubmit() {
     const output = getOutput(fields);
+    const result = JSON.stringify(output);
+    for (const keyValue of formdata) console.log(keyValue);
     const formData = new FormData();
-    formData.append("file", formdata);
-    formData.append("input", input);
-    formData.append("body", body);
-    formData.append("select", output);
+    formData.append("latitude", long);
+    formData.append("longitude", lati);
+    formData.append("content", body);
+    formData.append("jsonList", result);
+    for (const keyValue of formData) console.log(keyValue);
   }
 
   const activeFieldCount = fields.filter((field) => field.selectValue).length;
@@ -77,10 +84,9 @@ function Register() {
     <RegisterBox>
       <form onSubmit={handleSubmit}>
         <input type="file" accept="image/*" onChange={onChangeimge} />
-        <input type="text" value={input} onChange={onTextInput} />
-        <p>
-          <input type="text" value={body} onChange={onBodyInput} />
-        </p>
+        <input type="text" value={long} onChange={onLongInput} />
+        <input type="text" value={lati} onChange={onLatiInput} />
+        <input type="text" value={body} onChange={onBodyInput} />
       </form>
       <div>
         <button onClick={addField} disabled={isAddButtonDisabled}>
