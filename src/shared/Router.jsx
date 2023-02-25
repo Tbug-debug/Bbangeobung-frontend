@@ -7,6 +7,7 @@ import Detail from "../pages/Detail";
 import Review from "../pages/Review";
 import Signup from "../pages/Signup";
 import User from "../pages/User";
+import Register from "../pages/Register";
 
 function Router() {
   return (
@@ -15,10 +16,11 @@ function Router() {
         <Route path="/" element={<Mainpages />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/review" element={<Review />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/user" element={<User />} />
+        <Route path="/user/:id" element={<User />} />
       </Routes>
     </BrowserRouter>
   );
