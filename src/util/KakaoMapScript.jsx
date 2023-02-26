@@ -1,8 +1,8 @@
-import bongbbangmarker from '../assets/img/bongbbangmarker.png';
+import bongbbangmarker from "../assets/img/bongbbangmarker.png";
 const { kakao } = window;
 
 export default function KakaoMapScript(longitude, latitude) {
-  const container = document.getElementById('mymap');
+  const container = document.getElementById("mymap");
   const options = {
     center: new kakao.maps.LatLng(33.450701, 126.570667),
     level: 3,
@@ -13,7 +13,11 @@ export default function KakaoMapScript(longitude, latitude) {
     imageOption = { offset: new kakao.maps.Point(100, 105) }; // 마커이미지의 옵션, 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정
 
   // 마커의 이미지정보를 가지고 있는 마커이미지를 생성
-  const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+  const markerImage = new kakao.maps.MarkerImage(
+      imageSrc,
+      imageSize,
+      imageOption
+    ),
     markerPosition = new kakao.maps.LatLng(33.450701, 126.570667); // 마커가 표시될 위치
 
   // 마커를 생성

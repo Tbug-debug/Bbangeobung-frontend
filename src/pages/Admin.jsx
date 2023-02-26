@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import Navbar from '../components/Navbar';
-import NavWrapper from '../components/NavWrapper';
-import { FiChevronLeft } from 'react-icons/fi';
+import React from "react";
+import styled from "styled-components";
+import Navbar from "../components/Navbar";
+import NavWrapper from "../components/NavWrapper";
+import { FiChevronLeft } from "react-icons/fi";
 
 function Admin() {
   return (

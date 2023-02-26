@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import NavWrapper from '../components/NavWrapper';
-import Navbar from '../components/Navbar';
-import { FiChevronLeft } from 'react-icons/fi';
+import React from "react";
+import styled from "styled-components";
+import NavWrapper from "../components/NavWrapper";
+import Navbar from "../components/Navbar";
+import { FiChevronLeft } from "react-icons/fi";
 
 function user() {
   return (
