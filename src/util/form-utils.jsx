@@ -3,26 +3,23 @@ export function createNewFields(fields) {
   const newFields = [...fields];
   newFields.push({
     id: fields.length + 1,
-    selectValue: String(maxSelectValue + 1),
-    inputValue: "",
+    fishBreadTypeId: String(maxSelectValue + 1),
+    price: "",
   });
   return newFields;
 }
 
 function getMaxSelectValue(fields) {
-  if (fields.length === 0) {
-    return 0;
-  }
-  return Math.max(...fields.map((field) => Number(field.selectValue)));
+  return Math.max(fields.map((field) => Number(field.fishBreadTypeId)));
 }
 
 export function handleSelectChange(fields, id, event) {
   const newFields = [...fields];
-  const index = newFields.findIndex((field) => field.id === id);
+  const index = fields.findIndex((field) => field.id === id);
   if (index >= 0) {
     newFields[index] = {
       ...newFields[index],
-      selectValue: event.target.value,
+      fishBreadTypeId: event.target.value,
     };
     return newFields;
   }
@@ -35,7 +32,7 @@ export function handleInputChange(fields, id, event) {
   if (index >= 0) {
     newFields[index] = {
       ...newFields[index],
-      inputValue: event.target.value,
+      price: event.target.value,
     };
     return newFields;
   }
@@ -49,7 +46,7 @@ export function handleDelete(fields, id) {
 
 export function getOutput(fields) {
   return fields.map((field) => ({
-    selectValue: field.selectValue,
-    inputValue: field.inputValue,
+    fishBreadTypeId: field.fishBreadTypeId,
+    price: field.price,
   }));
 }

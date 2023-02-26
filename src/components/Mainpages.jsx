@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FiMenu, FiEdit } from "react-icons/fi";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { showStore } from "../api/api";
 import List from "./List";
 import Navbar from "./Navbar";
 import NavWrapper from "./NavWrapper";
+import isLogin from "../util/token";
 
 function Mainpages() {
   const { data, isLoading, isError } = useQuery("list", showStore);
+  const navigate = useNavigate();
 
   function onSucces(position) {
     const lat = position.coords.latitude;
@@ -22,6 +24,12 @@ function Mainpages() {
   function onFailure() {
     alert("위치 정보를 찾을수가 없습니다.");
   }
+
+  useEffect(() => {
+    if (isLogin() === false) {
+      navigate("/login");
+    }
+  }, []);
 
   navigator.geolocation.getCurrentPosition(onSucces, onFailure);
 

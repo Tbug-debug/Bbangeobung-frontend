@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Btn from "../components/Btn";
 import styled from "styled-components";
 import SignInput from "../components/SignInput";
@@ -6,16 +6,23 @@ import { useNavigate } from "react-router-dom";
 import useLoginInput from "../hooks/useLoginInput";
 import { useMutation } from "react-query";
 import { postLogin } from "../api/api";
+import isLogin from "../util/token";
 
 function Login() {
   const navigate = useNavigate();
 
   const login = useMutation(postLogin, {
     onSuccess: () => {
-      console.log("성공했습니다.");
+      alert("로그인 되었습니다.");
       navigate("/");
     },
   });
+
+  useEffect(() => {
+    if (isLogin() === true) {
+      navigate("/");
+    }
+  }, []);
 
   const idReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const [inputId, inputIdHandler, alertId, checkIdReg] = useLoginInput(

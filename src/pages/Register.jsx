@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Btn from '../components/Btn';
-import { createNewFields, handleSelectChange, handleInputChange, handleDelete, getOutput } from '../util/form-utils';
+import React, { useState } from "react";
+import { useMutation } from "react-query";
+import styled from "styled-components";
+import { postStore } from "../api/api";
+import Btn from "../components/Btn";
+import {
+  createNewFields,
+  handleSelectChange,
+  handleInputChange,
+  handleDelete,
+  getOutput,
+} from "../util/form-utils";
 
 const MAX_FIELDS = 3;
 
 function Register() {
-  const [fields, setFields] = useState([{ id: 1, selectValue: '1', inputValue: '' }]);
-  const [long, setLong] = useState('');
-  const [lati, setLati] = useState('');
-  const [body, setBody] = useState('');
-  const [formdata, setFormData] = useState([]);
+  const [fields, setFields] = useState([
+    { id: 1, fishBreadTypeId: "1", price: "" },
+  ]);
+  const [long, setLong] = useState("");
+  const [lati, setLati] = useState("");
+  const [body, setBody] = useState("");
+  const [formImagin, setFormformImagin] = useState(new FormData());
+
+  const postStor = useMutation(postStore, {
+    onSuccess: () => {
+      alert("전송 성공");
+    },
+  });
 
   function addField() {
     if (fields.length >= MAX_FIELDS) {
@@ -50,25 +66,35 @@ function Register() {
 
   function onChangeimge(e) {
     const img = e.target.files[0];
-    const formData = new FormData();
-    formData.append('imageFile', img);
-    setFormData(formData);
+    const formImg = new FormData();
+    formImg.append("imageFile", img);
+    setFormformImagin(formImg);
   }
 
   function handleSubmit() {
     const output = getOutput(fields);
     const result = JSON.stringify(output);
-    for (const keyValue of formdata) console.log(keyValue);
     const formData = new FormData();
-    formData.append('latitude', long);
-    formData.append('longitude', lati);
-    formData.append('content', body);
-    formData.append('jsonList', result);
+    formData.append("latitude", Number(long));
+    formData.append("longitude", Number(lati));
+    formData.append("content", body);
+    formData.append("jsonList", result);
+    for (const keyValue of formImagin) {
+      formData.append(keyValue[0], keyValue[1]);
+    }
+
+    //postStor.mutate(token, formData);
+
     for (const keyValue of formData) console.log(keyValue);
   }
 
-  const activeFieldCount = fields.filter((field) => field.selectValue).length;
-  const isAddButtonDisabled = fields.length === 0 || activeFieldCount >= MAX_FIELDS || fields[fields.length - 1].selectValue === '2';
+  const activeFieldCount = fields.filter(
+    (field) => field.fishBreadTypeId
+  ).length;
+  const isAddButtonDisabled =
+    fields.length === 0 ||
+    activeFieldCount >= MAX_FIELDS ||
+    fields[fields.length - 1].fishBreadTypeId === "2";
 
   return (
     <RegisterBox>
@@ -86,18 +112,35 @@ function Register() {
           </Btn>
           {fields.map((field) => (
             <div key={field.id}>
-              <select value={field.selectValue} onChange={(event) => handleSelectChangeWrapper(field.id, event)}>
+              <select
+                value={field.fishBreadTypeId}
+                onChange={(event) => handleSelectChangeWrapper(field.id, event)}
+              >
                 <option disabled value="">
                   Select an option
                 </option>
-                <option value="1" disabled={fields.some((f) => f.selectValue === '1' && f.id !== field.id)}>
+                <option
+                  value="1"
+                  disabled={fields.some(
+                    (f) => f.fishBreadTypeId === "1" && f.id !== field.id
+                  )}
+                >
                   Option 1
                 </option>
-                <option value="2" disabled={fields.some((f) => f.selectValue === '2' && f.id !== field.id)}>
+                <option
+                  value="2"
+                  disabled={fields.some(
+                    (f) => f.fishBreadTypeId === "2" && f.id !== field.id
+                  )}
+                >
                   Option 2
                 </option>
               </select>
-              <SelectInput type="text" value={field.inputValue} onChange={(event) => handleInputChangeWrapper(field.id, event)} />
+              <SelectInput
+                type="text"
+                value={field.price}
+                onChange={(event) => handleInputChangeWrapper(field.id, event)}
+              />
               <Btn smBtn delete onClick={() => handleDeleteWrapper(field.id)}>
                 Delete
               </Btn>
