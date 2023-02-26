@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Btn from "../components/Btn";
 import SignInput from "../components/SignInput";
@@ -6,16 +6,22 @@ import { useNavigate } from "react-router-dom";
 import useLoginInput from "../hooks/useLoginInput";
 import { useMutation } from "react-query";
 import { postRegister } from "../api/api";
+import isLogin from "../util/token";
 
 const Signup = () => {
   const navigate = useNavigate();
 
   const signup = useMutation(postRegister, {
     onSuccess: () => {
-      console.log("성공했습니다.");
       navigate("/login");
     },
   });
+
+  useEffect(() => {
+    if (isLogin() === true) {
+      navigate("/");
+    }
+  }, []);
 
   const idReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const [inputId, inputIdHandler, alertId, checkIdReg] = useLoginInput(
@@ -56,6 +62,35 @@ const Signup = () => {
     );
 
   function onSiginup(e) {
+    if (
+      inputId === "" &&
+      inputPassword === "" &&
+      inputCheckPw === "" &&
+      inputUserName === ""
+    ) {
+      return;
+    }
+
+    if (inputId === "") {
+      alert("ID를 입력해주세요.");
+      return;
+    }
+
+    if (inputPassword === "") {
+      alert("비밀번호를 입력해주세요.");
+      return;
+    }
+
+    if (inputCheckPw === "") {
+      alert("비밀번호 확인을 입력해주세요.");
+      return;
+    }
+
+    if (inputUserName === "") {
+      alert("닉네임을 입력해주세요.");
+      return;
+    }
+
     e.preventDefault();
     const userInfo = {
       username: inputUserName,

@@ -15,25 +15,11 @@ function Mainpages() {
   const [openMenu, setOpenMenu] = useState(false);
   const navigate = useNavigate();
 
-  function onSucces(position) {
-    const lat = position.coords.latitude;
-    const lng = position.coords.longitude;
-    const API_KEY = "ace92e82f7eba726c0d6706f0a692881";
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}`;
-    console.log(url);
-  }
-
-  function onFailure() {
-    alert("위치 정보를 찾을수가 없습니다.");
-  }
-
   useEffect(() => {
     if (isLogin() === false) {
       navigate("/login");
     }
   }, []);
-
-  navigator.geolocation.getCurrentPosition(onSucces, onFailure);
 
   const openMenuHandler = () => {
     setOpenMenu(true);
@@ -51,21 +37,25 @@ function Mainpages() {
           <FiMenu onClick={openMenuHandler} size={40} />
         </Navbar>
       </NavWrapper>
-      <ListBox>
-        {data?.data?.data.map((a) => {
-          const price = a.itemList[a.itemList.length - 1]?.price;
+      {isLoading ? (
+        <LodingText>붕어빵 로딩중이에붕어</LodingText>
+      ) : (
+        <ListBox>
+          {data?.data?.data.map((a) => {
+            const price = a.itemList[a.itemList.length - 1]?.price;
 
-          return (
-            <List
-              key={a.id}
-              contents={a.content}
-              imgURL={a.imageURL}
-              price={price}
-              id={a.id}
-            />
-          );
-        })}
-      </ListBox>
+            return (
+              <List
+                key={a.id}
+                contents={a.content}
+                imgURL={a.imageURL}
+                price={price}
+                id={a.id}
+              />
+            );
+          })}
+        </ListBox>
+      )}
       {openMenu && <Menu onClose={() => setOpenMenu(false)}></Menu>}
     </MainPageList>
   );
@@ -82,6 +72,10 @@ const ListBox = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 80px;
+`;
+
+const LodingText = styled.span`
+  font-family: "KCC-Ganpan";
 `;
 
 export default Mainpages;

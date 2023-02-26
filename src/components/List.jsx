@@ -38,6 +38,10 @@ const ListItemPriceAndContent = styled.div`
   align-items: center;
 `;
 
+const ListButtonDelete = styled.button`
+  border: 1px solid black;
+`;
+
 const ListItems = styled.div`
   //border: 0.0625rem solid black;
   width: 100%;

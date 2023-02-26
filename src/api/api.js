@@ -7,9 +7,9 @@ export const postRegister = async (data) => {
       "https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/user/signup",
       data
     );
-    console.log(response);
+    alert(response.data.message);
   } catch (e) {
-    console.log(e);
+    alert(e.response.data.message);
   }
 };
 
@@ -19,9 +19,11 @@ export const postLogin = async (data) => {
       "https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/user/login",
       data
     );
+
+    alert(response.data.message);
     HandleToken(response.headers.authorization);
   } catch (e) {
-    console.log(e);
+    alert(e.response.data.message);
   }
 };
 
@@ -36,7 +38,21 @@ export const showStore = async () => {
   }
 };
 
-export const postStore = async (token, data) => {
+export const showDetailStore = async ({ id, token }) => {
+  try {
+    const response = await axios.get(
+      `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/store/${id}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return response.data.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const postStore = async ({ token, data }) => {
   try {
     const response = await axios.post(
       "https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/store/",
@@ -48,7 +64,25 @@ export const postStore = async (token, data) => {
         },
       }
     );
-    console.log(response);
+    alert(response.data.message);
+  } catch (e) {
+    console.log(e.response.data.message);
+  }
+};
+
+export const deleteStore = async ({ token, id }) => {
+  try {
+    const response = await axios.delete(
+      "https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/store/",
+      id,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    alert(response.data.message);
   } catch (e) {
     console.log(e);
   }

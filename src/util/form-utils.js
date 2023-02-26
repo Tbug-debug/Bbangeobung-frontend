@@ -15,12 +15,21 @@ function getMaxSelectValue(fields) {
 
 export function handleSelectChange(fields, id, event) {
   const newFields = [...fields];
-  const index = fields.findIndex((field) => field.id === id);
+  const index = newFields.findIndex((field) => field.id === id);
   if (index >= 0) {
     newFields[index] = {
       ...newFields[index],
       fishBreadTypeId: event.target.value,
     };
+    const selectedValue = event.target.value;
+    if (
+      fields.some((f) => f.fishBreadTypeId === selectedValue && f.id !== id)
+    ) {
+      newFields[index] = {
+        ...newFields[index],
+        fishBreadTypeId: "",
+      };
+    }
     return newFields;
   }
   return fields;
@@ -29,7 +38,7 @@ export function handleSelectChange(fields, id, event) {
 export function handleInputChange(fields, id, event) {
   const newFields = [...fields];
   const index = newFields.findIndex((field) => field.id === id);
-  if (index >= 0) {
+  if (index >= 0 && !isNaN(event.target.value)) {
     newFields[index] = {
       ...newFields[index],
       price: event.target.value,
@@ -47,6 +56,9 @@ export function handleDelete(fields, id) {
 export function getOutput(fields) {
   return fields.map((field) => ({
     fishBreadTypeId: field.fishBreadTypeId,
-    price: field.price,
+    price:
+      field.price === ""
+        ? alert("붕어빵 가격은 숫자 아니면 등록 불가붕어!")
+        : field.price,
   }));
 }

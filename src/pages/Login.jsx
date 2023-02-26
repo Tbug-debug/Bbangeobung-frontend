@@ -13,7 +13,6 @@ function Login() {
 
   const login = useMutation(postLogin, {
     onSuccess: () => {
-      alert("로그인 되었습니다.");
       navigate("/");
     },
   });
@@ -45,6 +44,9 @@ function Login() {
 
   function onSubmitlogin(e) {
     e.preventDefault();
+    if (inputId === "" && inputPassword === "") {
+      return;
+    }
     const loginInfo = {
       email: inputId,
       password: inputPassword,

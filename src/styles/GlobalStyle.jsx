@@ -7,6 +7,9 @@ const GlobalStyle = createGlobalStyle`
     font-weight: normal;
     font-style: normal;
 }
+* {
+  font-family: "KCC-Ganpan";
+}
 
 &::-webkit-scrollbar {
     width: 10px;
