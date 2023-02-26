@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { useMutation } from "react-query";
 import styled from "styled-components";
-import { postStore } from "../api/api";
 import Btn from "../components/Btn";
 import {
   createNewFields,
@@ -10,6 +8,12 @@ import {
   handleDelete,
   getOutput,
 } from "../util/form-utils";
+import NavWrapper from "../components/NavWrapper";
+import Navbar from "../components/Navbar";
+import { FiChevronLeft } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { useMutation } from "react-query";
+import { postStore } from "../api/api";
 
 const MAX_FIELDS = 3;
 
@@ -97,61 +101,74 @@ function Register() {
     fields[fields.length - 1].fishBreadTypeId === "2";
 
   return (
-    <RegisterBox>
-      <Form onSubmit={handleSubmit}>
-        <input type="file" accept="image/*" onChange={onChangeimge} />
-        <RegisterInput type="text" value={long} onChange={onLongInput} />
-        <RegisterInput type="text" value={lati} onChange={onLatiInput} />
-        <RegisterSpan>Contents</RegisterSpan>
-        <RegisterInput type="text" value={body} onChange={onBodyInput} />
-      </Form>
-      <FieldContainer>
-        <FieldWrapper>
-          <Btn onClick={addField} disabled={isAddButtonDisabled}>
-            Add Field
+    <>
+      <NavWrapper>
+        <Navbar>
+          <Link to={"/"}>
+            <FiChevronLeft size={40} />
+          </Link>
+        </Navbar>
+      </NavWrapper>
+      <RegisterBox>
+        <Form onSubmit={handleSubmit}>
+          <input type="file" accept="image/*" onChange={onChangeimge} />
+          <RegisterInput type="text" value={long} onChange={onLongInput} />
+          <RegisterInput type="text" value={lati} onChange={onLatiInput} />
+          <RegisterSpan>Contents</RegisterSpan>
+          <RegisterInput type="text" value={body} onChange={onBodyInput} />
+        </Form>
+        <FieldContainer>
+          <FieldWrapper>
+            <Btn onClick={addField} disabled={isAddButtonDisabled}>
+              Add Field
+            </Btn>
+            {fields.map((field) => (
+              <div key={field.id}>
+                <select
+                  value={field.selectValue}
+                  onChange={(event) =>
+                    handleSelectChangeWrapper(field.id, event)
+                  }
+                >
+                  <option disabled value="">
+                    Select an option
+                  </option>
+                  <option
+                    value="1"
+                    disabled={fields.some(
+                      (f) => f.selectValue === "1" && f.id !== field.id
+                    )}
+                  >
+                    Option 1
+                  </option>
+                  <option
+                    value="2"
+                    disabled={fields.some(
+                      (f) => f.selectValue === "2" && f.id !== field.id
+                    )}
+                  >
+                    Option 2
+                  </option>
+                </select>
+                <SelectInput
+                  type="text"
+                  value={field.inputValue}
+                  onChange={(event) =>
+                    handleInputChangeWrapper(field.id, event)
+                  }
+                />
+                <Btn smBtn delete onClick={() => handleDeleteWrapper(field.id)}>
+                  Delete
+                </Btn>
+              </div>
+            ))}
+          </FieldWrapper>
+          <Btn disabled={fields <= 0} onClick={handleSubmit}>
+            Submit
           </Btn>
-          {fields.map((field) => (
-            <div key={field.id}>
-              <select
-                value={field.fishBreadTypeId}
-                onChange={(event) => handleSelectChangeWrapper(field.id, event)}
-              >
-                <option disabled value="">
-                  Select an option
-                </option>
-                <option
-                  value="1"
-                  disabled={fields.some(
-                    (f) => f.fishBreadTypeId === "1" && f.id !== field.id
-                  )}
-                >
-                  Option 1
-                </option>
-                <option
-                  value="2"
-                  disabled={fields.some(
-                    (f) => f.fishBreadTypeId === "2" && f.id !== field.id
-                  )}
-                >
-                  Option 2
-                </option>
-              </select>
-              <SelectInput
-                type="text"
-                value={field.price}
-                onChange={(event) => handleInputChangeWrapper(field.id, event)}
-              />
-              <Btn smBtn delete onClick={() => handleDeleteWrapper(field.id)}>
-                Delete
-              </Btn>
-            </div>
-          ))}
-        </FieldWrapper>
-        <Btn disabled={fields <= 0} onClick={handleSubmit}>
-          Submit
-        </Btn>
-      </FieldContainer>
-    </RegisterBox>
+        </FieldContainer>
+      </RegisterBox>
+    </>
   );
 }
 
@@ -161,7 +178,6 @@ const RegisterBox = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
-  border: 1px solid black;
 `;
 
 const Form = styled.form`
