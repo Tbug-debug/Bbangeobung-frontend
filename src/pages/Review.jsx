@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import Btn from '../components/Btn';
-import Navbar from '../components/Navbar';
-import NavWrapper from '../components/NavWrapper';
-import { FiChevronLeft } from 'react-icons/fi';
+import React from "react";
+import styled from "styled-components";
+import Btn from "../components/Btn";
+import Navbar from "../components/Navbar";
+import NavWrapper from "../components/NavWrapper";
+import { FiChevronLeft } from "react-icons/fi";
 
 function Review() {
   return (
@@ -18,7 +18,7 @@ function Review() {
           <ReviewImageBox></ReviewImageBox>
           <ReviewTextBox>
             <ReviewButtonReport>
-              <Btn smBtn report children={'신고하기'} />
+              <Btn smBtn report children={"신고하기"} />
             </ReviewButtonReport>
             <span>djfkdlafjsdak</span>
           </ReviewTextBox>

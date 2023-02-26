@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Btn from '../components/Btn';
-import { createNewFields, handleSelectChange, handleInputChange, handleDelete, getOutput } from '../util/form-utils';
-import NavWrapper from '../components/NavWrapper';
-import Navbar from '../components/Navbar';
-import { FiChevronLeft } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import styled from "styled-components";
+import Btn from "../components/Btn";
+import {
+  createNewFields,
+  handleSelectChange,
+  handleInputChange,
+  handleDelete,
+  getOutput,
+} from "../util/form-utils";
+import NavWrapper from "../components/NavWrapper";
+import Navbar from "../components/Navbar";
+import { FiChevronLeft } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const MAX_FIELDS = 3;
 
 function Register() {
-  const [fields, setFields] = useState([{ id: 1, selectValue: '1', inputValue: '' }]);
-  const [long, setLong] = useState('');
-  const [lati, setLati] = useState('');
-  const [body, setBody] = useState('');
+  const [fields, setFields] = useState([
+    { id: 1, selectValue: "1", inputValue: "" },
+  ]);
+  const [long, setLong] = useState("");
+  const [lati, setLati] = useState("");
+  const [body, setBody] = useState("");
   const [formdata, setFormData] = useState([]);
 
   function addField() {
@@ -55,7 +63,7 @@ function Register() {
   function onChangeimge(e) {
     const img = e.target.files[0];
     const formData = new FormData();
-    formData.append('imageFile', img);
+    formData.append("imageFile", img);
     setFormData(formData);
   }
 
@@ -64,21 +72,24 @@ function Register() {
     const result = JSON.stringify(output);
     for (const keyValue of formdata) console.log(keyValue);
     const formData = new FormData();
-    formData.append('latitude', long);
-    formData.append('longitude', lati);
-    formData.append('content', body);
-    formData.append('jsonList', result);
+    formData.append("latitude", long);
+    formData.append("longitude", lati);
+    formData.append("content", body);
+    formData.append("jsonList", result);
     for (const keyValue of formData) console.log(keyValue);
   }
 
   const activeFieldCount = fields.filter((field) => field.selectValue).length;
-  const isAddButtonDisabled = fields.length === 0 || activeFieldCount >= MAX_FIELDS || fields[fields.length - 1].selectValue === '2';
+  const isAddButtonDisabled =
+    fields.length === 0 ||
+    activeFieldCount >= MAX_FIELDS ||
+    fields[fields.length - 1].selectValue === "2";
 
   return (
     <>
       <NavWrapper>
         <Navbar>
-          <Link to={'/'}>
+          <Link to={"/"}>
             <FiChevronLeft size={40} />
           </Link>
         </Navbar>
@@ -98,18 +109,39 @@ function Register() {
             </Btn>
             {fields.map((field) => (
               <div key={field.id}>
-                <select value={field.selectValue} onChange={(event) => handleSelectChangeWrapper(field.id, event)}>
+                <select
+                  value={field.selectValue}
+                  onChange={(event) =>
+                    handleSelectChangeWrapper(field.id, event)
+                  }
+                >
                   <option disabled value="">
                     Select an option
                   </option>
-                  <option value="1" disabled={fields.some((f) => f.selectValue === '1' && f.id !== field.id)}>
+                  <option
+                    value="1"
+                    disabled={fields.some(
+                      (f) => f.selectValue === "1" && f.id !== field.id
+                    )}
+                  >
                     Option 1
                   </option>
-                  <option value="2" disabled={fields.some((f) => f.selectValue === '2' && f.id !== field.id)}>
+                  <option
+                    value="2"
+                    disabled={fields.some(
+                      (f) => f.selectValue === "2" && f.id !== field.id
+                    )}
+                  >
                     Option 2
                   </option>
                 </select>
-                <SelectInput type="text" value={field.inputValue} onChange={(event) => handleInputChangeWrapper(field.id, event)} />
+                <SelectInput
+                  type="text"
+                  value={field.inputValue}
+                  onChange={(event) =>
+                    handleInputChangeWrapper(field.id, event)
+                  }
+                />
                 <Btn smBtn delete onClick={() => handleDeleteWrapper(field.id)}>
                   Delete
                 </Btn>
