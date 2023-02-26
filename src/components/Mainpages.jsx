@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiMenu, FiEdit } from "react-icons/fi";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
@@ -7,9 +7,11 @@ import { showStore } from "../api/api";
 import List from "./List";
 import Navbar from "./Navbar";
 import NavWrapper from "./NavWrapper";
+import Menu from "./Menu";
 
 function Mainpages() {
   const { data, isLoading, isError } = useQuery("list", showStore);
+  const [openMenu, setOpenMenu] = useState(false);
 
   function onSucces(position) {
     const lat = position.coords.latitude;
@@ -25,6 +27,10 @@ function Mainpages() {
 
   navigator.geolocation.getCurrentPosition(onSucces, onFailure);
 
+  const openMenuHandler = () => {
+    setOpenMenu(true);
+  };
+
   return (
     <MainPageList>
       <NavWrapper>
@@ -34,7 +40,7 @@ function Mainpages() {
           </Link>
         </Navbar>
         <Navbar>
-          <FiMenu size={40} />
+          <FiMenu onClick={openMenuHandler} size={40} />
         </Navbar>
       </NavWrapper>
       <ListBox>
@@ -52,6 +58,7 @@ function Mainpages() {
           );
         })}
       </ListBox>
+      {openMenu && <Menu onClose={() => setOpenMenu(false)}></Menu>}
     </MainPageList>
   );
 }
