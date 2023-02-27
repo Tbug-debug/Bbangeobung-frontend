@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Btn from "../components/Btn";
 import Navbar from "../components/Navbar";
@@ -8,7 +8,7 @@ import { MdOutlineReport } from "react-icons/md";
 import KakaoMapScript from "../util/KakaoMapScript";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { QueryClient, useMutation, useQuery } from "react-query";
-import { deleteStore, showDetailStore } from "../api/api";
+import { deleteStore, showDetailStore, postComment } from "../api/api";
 import Cookies from "js-cookie";
 
 function Detail() {
@@ -17,6 +17,7 @@ function Detail() {
   const { id } = useParams();
   const { data } = useQuery("showDetail", () => showDetailStore({ id, token }));
   const queryClient = new QueryClient();
+  const [comment, setComment] = useState("");
 
   // useEffect(() => {
   //   if (data === undefined) {
@@ -40,6 +41,16 @@ function Detail() {
   function onDelete() {
     dlelteStoreItem.mutate({ token: token, id: id });
   }
+
+  const postingComment = useMutation(postComment, {
+    onSuccess: () => {},
+  });
+
+  const commentHandler = (e) => {
+    e.preventDefault();
+    const commentInfo = { comment: comment, storeId: Number(id) };
+    postingComment.mutate({ token, commentInfo });
+  };
 
   return (
     <DetailBox>
@@ -69,9 +80,13 @@ function Detail() {
         <ContentsWrapper>덧글 리스트 박스</ContentsWrapper>
 
         <ReivewInputBox>
-          <form>
+          <form onSubmit={commentHandler}>
             <div>
-              <ReviewInput placeholder="리뷰를 입력해주세요." />
+              <ReviewInput
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="리뷰를 입력해주세요."
+              />
             </div>
             <ReviewButton>
               <Btn>리뷰 작성하기</Btn>

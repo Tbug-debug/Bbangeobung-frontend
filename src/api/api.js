@@ -94,3 +94,21 @@ export const deleteStore = async ({ token, id }) => {
     console.log("deleteStore", e);
   }
 };
+
+export const postComment = async ({ token, commentInfo }) => {
+  try {
+    const response = await axios.post(
+      `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/comment/`,
+      commentInfo,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    console.log(response);
+  } catch (e) {
+    console.log("postComment error", e);
+  }
+};
