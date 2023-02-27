@@ -25,6 +25,7 @@ export const postLogin = async (data) => {
     localStorage.setItem(
       "userInfo",
       JSON.stringify({
+        id: `${response.data.data.id}`,
         userName: `${response.data.data.username}`,
         userEmail: `${response.data.data.email}`,
       })

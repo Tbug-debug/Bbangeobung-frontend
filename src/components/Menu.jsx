@@ -15,6 +15,7 @@ const Menu = ({ onClose }) => {
 
   const logOutHandler = () => {
     removeCookie("access_token");
+    localStorage.removeItem("userInfo");
     navigate("/login");
   };
 
