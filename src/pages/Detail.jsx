@@ -15,17 +15,13 @@ function Detail() {
   const navigate = useNavigate();
   const token = Cookies.get("access_token");
   const { id } = useParams();
-  const { data } = useQuery("showDetail", () => showDetailStore({ id, token }));
+  const { data } = useQuery(
+    "showDetail",
+    () => showDetailStore({ id, token }),
+    { staleTime: Infinity }
+  );
   const queryClient = new QueryClient();
   const [comment, setComment] = useState("");
-
-  // useEffect(() => {
-  //   if (data === undefined) {
-  //     alert("다시 로그인 해주세용");
-  //     removeCookie("access_token");
-  //     navigate("/login");
-  //   }
-  // }, []);
 
   useEffect(() => {
     KakaoMapScript(data?.longitude, data?.latitude);
