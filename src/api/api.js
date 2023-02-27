@@ -20,7 +20,7 @@ export const postLogin = async (data) => {
       data
     );
 
-    alert(response.data.message);
+    console.log(response);
     HandleToken(response.headers.authorization);
   } catch (e) {
     alert(e.response.data.message);

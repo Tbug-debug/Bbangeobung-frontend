@@ -21,7 +21,7 @@ const token = () => Cookies.get("access_token");
 
 function Register() {
   const [fields, setFields] = useState([
-    { id: 1, fishBreadTypeId: "1", price: "" },
+    { id: 1, title: "팥붕어빵", price: "" },
   ]);
 
   const [long, setLong] = useState("");
@@ -119,15 +119,15 @@ function Register() {
       formData.append(keyValue[0], keyValue[1]);
     }
 
-    postStor.mutate({ token: token(), data: formData });
+    console.log(result);
+
+    //postStor.mutate({ token: token(), data: formData });
   }
 
-  const activeFieldCount = fields.filter(
-    (field) => field.fishBreadTypeId
-  ).length;
+  const activeFieldCount = fields.filter((field) => field.title).length;
   const isAddButtonDisabled =
     activeFieldCount >= MAX_FIELDS ||
-    fields[fields.length - 1].fishBreadTypeId === "2";
+    fields[fields.length - 1].title === "슈크림붕어빵";
 
   return (
     <>
@@ -157,9 +157,9 @@ function Register() {
             value={lati}
             onChange={onLatiInput}
           />
-          <RegisterSpan>&lt;가게 이름... &gt;</RegisterSpan>
+          <RegisterSpan>&lt;가게 설명... &gt;</RegisterSpan>
           <RegisterInput
-            placeholder="붕어빵 가게 이름은 10글자 이하로!"
+            placeholder="붕어빵 가게 설명은 10글자 이하로!"
             type="text"
             value={body}
             onChange={onBodyInput}
@@ -176,7 +176,7 @@ function Register() {
             {fields.map((field) => (
               <div key={field.id}>
                 <SelectBox
-                  value={field.fishBreadTypeId}
+                  value={field.title}
                   onChange={(event) =>
                     handleSelectChangeWrapper(field.id, event)
                   }
@@ -185,27 +185,21 @@ function Register() {
                     Select an option
                   </SelectOption>
                   <SelectOption
-                    value="1"
+                    value="팥붕어빵"
                     disabled={
                       fields.some(
-                        (f) =>
-                          f.fishBreadTypeId === "1" &&
-                          f.id !== field.id &&
-                          field.fishBreadTypeId !== "1"
-                      ) || field.fishBreadTypeId === ""
+                        (f) => f.id === 1 && f.id !== field.id && field.id !== 1
+                      ) || field.title === ""
                     }
                   >
                     팥붕어빵
                   </SelectOption>
                   <SelectOption
-                    value="2"
+                    value="슈크림붕어빵"
                     disabled={
                       fields.some(
-                        (f) =>
-                          f.fishBreadTypeId === "2" &&
-                          f.id !== field.id &&
-                          field.fishBreadTypeId !== "2"
-                      ) || field.fishBreadTypeId === ""
+                        (f) => f.id === 2 && f.id !== field.id && field.id !== 2
+                      ) || field.title === ""
                     }
                   >
                     슈크림붕어빵
