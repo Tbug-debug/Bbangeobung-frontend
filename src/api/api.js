@@ -107,8 +107,19 @@ export const postComment = async ({ token, commentInfo }) => {
         },
       }
     );
-    console.log(response);
+    return response.data;
   } catch (e) {
     console.log("postComment error", e);
+  }
+};
+
+export const showComment = async (storeId) => {
+  try {
+    const response = await axios.get(
+      `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/comment/?storeId=${storeId}`
+    );
+    return response;
+  } catch (e) {
+    console.log("showComment error", e);
   }
 };

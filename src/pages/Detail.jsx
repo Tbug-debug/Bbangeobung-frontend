@@ -8,8 +8,14 @@ import { MdOutlineReport } from "react-icons/md";
 import KakaoMapScript from "../util/KakaoMapScript";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { QueryClient, useMutation, useQuery } from "react-query";
-import { deleteStore, showDetailStore, postComment } from "../api/api";
+import {
+  deleteStore,
+  showDetailStore,
+  postComment,
+  showComment,
+} from "../api/api";
 import Cookies from "js-cookie";
+import CommentList from "../components/comment/CommentList";
 
 function Detail() {
   const navigate = useNavigate();
@@ -38,8 +44,13 @@ function Detail() {
     dlelteStoreItem.mutate({ token: token, id: id });
   }
 
+  const commentData = useQuery("showPostComment", () => showComment(id));
+  console.log(commentData?.data?.data?.data);
+
   const postingComment = useMutation(postComment, {
-    onSuccess: () => {},
+    onSuccess: () => {
+      queryClient.invalidateQueries("showPostComment");
+    },
   });
 
   const commentHandler = (e) => {
@@ -73,7 +84,9 @@ function Detail() {
         <ImageAndContentsBox>
           <ImageSize src={data?.imageURL} />
         </ImageAndContentsBox>
-        <ContentsWrapper>덧글 리스트 박스</ContentsWrapper>
+        {commentData?.data?.data?.data.map((item) => {
+          return <CommentList key={item.id} item={item}></CommentList>;
+        })}
 
         <ReivewInputBox>
           <form onSubmit={commentHandler}>
