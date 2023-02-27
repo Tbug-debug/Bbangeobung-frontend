@@ -4,6 +4,7 @@ import NavWrapper from "../components/NavWrapper";
 import Navbar from "../components/Navbar";
 import { FiChevronLeft } from "react-icons/fi";
 import DefaultImage from "../components/DefaultImage";
+import { Link } from "react-router-dom";
 
 function user() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -12,7 +13,9 @@ function user() {
     <>
       <NavWrapper>
         <Navbar>
-          <FiChevronLeft size={40}></FiChevronLeft>
+          <Link to={-1}>
+            <FiChevronLeft size={40}></FiChevronLeft>
+          </Link>
         </Navbar>
       </NavWrapper>
       <UserInfoContainer>
