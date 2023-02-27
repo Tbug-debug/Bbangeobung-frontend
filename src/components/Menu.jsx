@@ -3,10 +3,21 @@ import styled, { keyframes } from "styled-components";
 import Btn from "../components/Btn";
 import useOutSideClick from "../hooks/useOutSideClick";
 import bongbbang from "../assets/img/bongbbang.png";
+import { useCookies } from "react-cookie";
+import { useNavigate, Link } from "react-router-dom";
 
 const Menu = ({ onClose }) => {
   const modalRef = useRef(null);
   useOutSideClick(modalRef, onClose);
+  const navigate = useNavigate();
+
+  const [, , removeCookie] = useCookies(["access_token"]);
+
+  const logOutHandler = () => {
+    removeCookie("access_token");
+    navigate("/login");
+  };
+
   return (
     <>
       <MenuOverlay>
@@ -15,8 +26,12 @@ const Menu = ({ onClose }) => {
             <UserImge src={bongbbang}></UserImge>
           </ImgBg>
           <BtnWrapper>
-            <Btn>마이페이지</Btn>
-            <Btn danger>로그아웃</Btn>
+            <Link to="/user/1">
+              <Btn>마이페이지</Btn>
+            </Link>
+            <Btn danger onClick={logOutHandler}>
+              로그아웃
+            </Btn>
           </BtnWrapper>
         </MenuContainer>
       </MenuOverlay>
