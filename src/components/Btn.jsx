@@ -68,6 +68,14 @@ const BtnStyle = styled.button`
       font-size: 20px;
       background-color: ${({ theme }) => theme.color.btn_success};
     `}
+    ${(props) =>
+    props.categoryBtn &&
+    css`
+      width: 60px;
+      height: 35px;
+      background-color: #7b8fa1;
+      color: white;
+    `}
 `;
 
 export default Btn;

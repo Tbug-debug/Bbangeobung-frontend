@@ -38,7 +38,7 @@ export const postLogin = async (data) => {
 export const showStore = async (id) => {
   try {
     const response = await axios.get(
-      `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/store/?fIshBredTypeId=${id}`
+      `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/v2/store/?itemName=${id}`
     );
     return response;
   } catch (e) {
