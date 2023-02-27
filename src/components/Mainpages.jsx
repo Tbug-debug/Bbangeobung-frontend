@@ -11,7 +11,7 @@ import Menu from "./Menu";
 import isLogin from "../util/token";
 
 function Mainpages() {
-  const { data, isLoading, isError } = useQuery("list", showStore);
+  const { data, isLoading, isError } = useQuery("list", () => showStore(0));
   const [openMenu, setOpenMenu] = useState(false);
   const navigate = useNavigate();
 

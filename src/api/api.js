@@ -20,8 +20,6 @@ export const postLogin = async (data) => {
       data
     );
 
-    console.log(response);
-
     localStorage.setItem(
       "userInfo",
       JSON.stringify({
@@ -37,21 +35,19 @@ export const postLogin = async (data) => {
   }
 };
 
-export const showStore = async () => {
+export const showStore = async (id) => {
   try {
     const response = await axios.get(
-      "https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/store/"
+      `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/store/?fIshBredTypeId=${id}`
     );
     return response;
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 };
 
 export const showDetailStore = async ({ id, token }) => {
   try {
     const response = await axios.get(
-      `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/store/${id}`,
+      `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/v2/store/${id}`,
       {
         headers: { Authorization: token },
       }
@@ -65,7 +61,7 @@ export const showDetailStore = async ({ id, token }) => {
 export const postStore = async ({ token, data }) => {
   try {
     const response = await axios.post(
-      "https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/store/",
+      "https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/v2/store/",
       data,
       {
         headers: {
@@ -76,15 +72,14 @@ export const postStore = async ({ token, data }) => {
     );
     alert(response.data.message);
   } catch (e) {
-    console.log(e.response.data.message);
+    console.log(e);
   }
 };
 
 export const deleteStore = async ({ token, id }) => {
   try {
     const response = await axios.delete(
-      "https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/store/",
-      id,
+      `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/store/${id}`,
       {
         headers: {
           Authorization: token,
@@ -93,7 +88,5 @@ export const deleteStore = async ({ token, id }) => {
       }
     );
     alert(response.data.message);
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 };

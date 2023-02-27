@@ -21,7 +21,7 @@ const token = () => Cookies.get("access_token");
 
 function Register() {
   const [fields, setFields] = useState([
-    { id: 1, title: "팥붕어빵", price: "" },
+    { id: 1, name: "팥붕어빵", price: "" },
   ]);
 
   const [long, setLong] = useState("");
@@ -104,7 +104,7 @@ function Register() {
     }
 
     if (body.length >= 10) {
-      alert("붕어빵 가게 이름은 10글자 이하로 해주세요.");
+      alert("붕어빵 가게 이름은 10글자 이하로 해주붕어!.");
       return;
     }
 
@@ -119,15 +119,13 @@ function Register() {
       formData.append(keyValue[0], keyValue[1]);
     }
 
-    console.log(result);
-
-    //postStor.mutate({ token: token(), data: formData });
+    postStor.mutate({ token: token(), data: formData });
   }
 
-  const activeFieldCount = fields.filter((field) => field.title).length;
+  const activeFieldCount = fields.filter((field) => field.name).length;
   const isAddButtonDisabled =
     activeFieldCount >= MAX_FIELDS ||
-    fields[fields.length - 1].title === "슈크림붕어빵";
+    fields[fields.length - 1].name === "슈크림붕어빵";
 
   return (
     <>
@@ -176,7 +174,7 @@ function Register() {
             {fields.map((field) => (
               <div key={field.id}>
                 <SelectBox
-                  value={field.title}
+                  value={field.name}
                   onChange={(event) =>
                     handleSelectChangeWrapper(field.id, event)
                   }
@@ -189,7 +187,7 @@ function Register() {
                     disabled={
                       fields.some(
                         (f) => f.id === 1 && f.id !== field.id && field.id !== 1
-                      ) || field.title === ""
+                      ) || field.name === ""
                     }
                   >
                     팥붕어빵
@@ -199,7 +197,7 @@ function Register() {
                     disabled={
                       fields.some(
                         (f) => f.id === 2 && f.id !== field.id && field.id !== 2
-                      ) || field.title === ""
+                      ) || field.name === ""
                     }
                   >
                     슈크림붕어빵

@@ -7,7 +7,7 @@ import { FiChevronLeft } from "react-icons/fi";
 import { MdOutlineReport } from "react-icons/md";
 import KakaoMapScript from "../util/KakaoMapScript";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQuery } from "react-query";
+import { QueryClient, useMutation, useQuery } from "react-query";
 import { deleteStore, showDetailStore } from "../api/api";
 import Cookies from "js-cookie";
 
@@ -18,6 +18,7 @@ function Detail() {
   const { data, isLoading, isError } = useQuery("showDetail", () =>
     showDetailStore({ id, token })
   );
+  const queryClient = new QueryClient();
 
   // useEffect(() => {
   //   if (data === undefined) {
@@ -33,6 +34,7 @@ function Detail() {
 
   const dlelteStoreItem = useMutation(deleteStore, {
     onSuccess: () => {
+      queryClient.invalidateQueries("list");
       navigate("/");
     },
   });

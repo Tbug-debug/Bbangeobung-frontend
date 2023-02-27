@@ -32,7 +32,7 @@ export function createNewFields(fields) {
   const newFields = [...fields];
   newFields.push({
     id: fields.length + 1,
-    title: fields.length === 0 ? "팥붕어빵" : "슈크림붕어빵",
+    name: fields.length === 0 ? "팥붕어빵" : "슈크림붕어빵",
     price: "",
   });
   return newFields;
@@ -44,13 +44,13 @@ export function handleSelectChange(fields, id, event) {
   if (index >= 0) {
     newFields[index] = {
       ...newFields[index],
-      title: event.target.value,
+      name: event.target.value,
     };
     const selectedValue = event.target.value;
-    if (fields.some((f) => f.title === selectedValue && f.id !== id)) {
+    if (fields.some((f) => f.name === selectedValue && f.id !== id)) {
       newFields[index] = {
         ...newFields[index],
-        title: "",
+        name: "",
       };
     }
     return newFields;
@@ -78,7 +78,7 @@ export function handleDelete(fields, id) {
 
 export function getOutput(fields) {
   return fields.map((field) => ({
-    title: field.title,
+    name: field.name,
     price:
       field.price === ""
         ? alert("붕어빵 가격은 숫자 아니면 등록 불가붕어!")
