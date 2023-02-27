@@ -32,7 +32,7 @@ function Detail() {
 
   const dlelteStoreItem = useMutation(deleteStore, {
     onSuccess: () => {
-      queryClient.invalidateQueries("showDetail");
+      queryClient.invalidateQueries("list");
       navigate("/");
     },
   });
