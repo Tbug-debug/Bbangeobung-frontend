@@ -9,6 +9,7 @@ import Navbar from "./Navbar";
 import NavWrapper from "./NavWrapper";
 import Menu from "./Menu";
 import isLogin from "../util/token";
+import Btn from "./Btn";
 
 function Mainpages() {
   const { data, isLoading } = useQuery("list", () => showStore(""));
@@ -32,6 +33,15 @@ function Mainpages() {
           <Link to={"/register"}>
             <FiEdit size={40} />
           </Link>
+        </Navbar>
+        <Navbar>
+          <Btn categoryBtn>전체</Btn>
+        </Navbar>
+        <Navbar>
+          <Btn categoryBtn>팥</Btn>
+        </Navbar>
+        <Navbar>
+          <Btn categoryBtn>슈크림</Btn>
         </Navbar>
         <Navbar>
           <FiMenu onClick={openMenuHandler} size={40} />

@@ -3,8 +3,11 @@ import styled from "styled-components";
 import NavWrapper from "../components/NavWrapper";
 import Navbar from "../components/Navbar";
 import { FiChevronLeft } from "react-icons/fi";
+import DefaultImage from "../components/DefaultImage";
 
 function user() {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
   return (
     <>
       <NavWrapper>
@@ -12,71 +15,44 @@ function user() {
           <FiChevronLeft size={40}></FiChevronLeft>
         </Navbar>
       </NavWrapper>
-      <UserHeader>
+      <UserInfoContainer>
         <UserImageBannerBox>
-          <UserImageBanner></UserImageBanner>
+          <DefaultImage></DefaultImage>
+          <UserInfoWrapper>
+            <UserIdBox>
+              <span>닉네임 : </span>
+              <span>{userInfo.userName}</span>
+            </UserIdBox>
+          </UserInfoWrapper>
         </UserImageBannerBox>
-        <UserBox>
-          <UserInfo>
-            <UserNicName>닉네임</UserNicName>
-          </UserInfo>
-          <UserInfo>
-            <UserImail>유저 이메일</UserImail>
-          </UserInfo>
-          <UserWriteInfo>
-            <div>내가쓴 목록</div>
-          </UserWriteInfo>
-        </UserBox>
-      </UserHeader>
+      </UserInfoContainer>
     </>
   );
 }
-const UserHeader = styled.div`
+
+const UserInfoContainer = styled.div`
   height: 100%;
-  margin-top: 50px;
   text-align: center;
-  overflow: hidden;
+  overflow: auto;
+  padding-bottom: 20px;
 `;
 
 const UserImageBannerBox = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3.125rem;
-`;
-
-const UserImageBanner = styled.div`
-  width: 9.375rem;
-  height: 9.375rem;
-  border-radius: 50%;
-  background-color: yellow;
-`;
-
-const UserBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
-const UserInfo = styled.div`
-  width: 25rem;
-  height: 6.25rem;
-  margin-top: 4.375rem;
-  background-color: ${({ theme }) => theme.color.item_bg};
-  border-radius: 1.25rem;
+const UserInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
-const UserWriteInfo = styled.div`
-  width: 25rem;
-  height: 12.5rem;
-  margin-top: 4.375rem;
-  background-color: ${({ theme }) => theme.color.item_bg};
-  border-radius: 1.25rem;
+const UserIdBox = styled.div`
+  span {
+  }
 `;
-
-const UserNicName = styled.div``;
-
-const UserImail = styled.div``;
 
 export default user;

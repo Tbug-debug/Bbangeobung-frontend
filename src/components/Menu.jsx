@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import Btn from "../components/Btn";
 import useOutSideClick from "../hooks/useOutSideClick";
-import bongbbang from "../assets/img/bongbbang.png";
 import { useCookies } from "react-cookie";
 import { useNavigate, Link } from "react-router-dom";
+import DefaultImage from "./DefaultImage";
 
 const Menu = ({ onClose }) => {
   const modalRef = useRef(null);
@@ -23,9 +23,7 @@ const Menu = ({ onClose }) => {
     <>
       <MenuOverlay>
         <MenuContainer ref={modalRef}>
-          <ImgBg>
-            <UserImge src={bongbbang}></UserImge>
-          </ImgBg>
+          <DefaultImage />
           <BtnWrapper>
             <Link to="/user/1">
               <Btn>마이페이지</Btn>
@@ -66,63 +64,6 @@ const MenuContainer = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   background-color: ${({ theme }) => theme.color.component_bg};
-`;
-
-const imgAni = keyframes`
-0%,
-100% {
-transform: translateX(0%);
-transform: translateX(0%);
-transform-origin: 50% 50%;
-transform-origin: 50% 50%;
-}
-15% {
-transform: translateX(-30px) rotate(-6deg);
-transform: translateX(-30px) rotate(-6deg);
-width: 250px;
-height: 250px;
-}
-30% {
-transform: translateX(15px) rotate(6deg);
-transform: translateX(15px) rotate(6deg);
-width: 250px;
-height: 250px;
-}
-45% {
-transform: translateX(-15px) rotate(-3.6deg);
-transform: translateX(-15px) rotate(-3.6deg);
-
-width: 250px;
-height: 250px;
-}
-60% {
-transform: translateX(9px) rotate(2.4deg);
-transform: translateX(9px) rotate(2.4deg);
-width: 250px;
-height: 250px;
-}
-75% {
-transform: translateX(-6px) rotate(-1.2deg);
-transform: translateX(-6px) rotate(-1.2deg);
-}
-`;
-
-const ImgBg = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 200px;
-  height: 200px;
-  margin-top: 120px;
-  border-radius: 100px;
-  background-color: ${({ theme }) => theme.color.layout_bg};
-`;
-
-const UserImge = styled.img`
-  width: 200px;
-  height: 200px;
-  animation: ${imgAni} 1.3s both infinite;
-  transform-origin: 50% 50%;
 `;
 
 const BtnWrapper = styled.div`
