@@ -107,7 +107,7 @@ export const postComment = async ({ token, commentInfo }) => {
         },
       }
     );
-    return response.data;
+    return response.data.data.comment;
   } catch (e) {
     console.log("postComment error", e);
   }
@@ -118,7 +118,7 @@ export const showComment = async (storeId) => {
     const response = await axios.get(
       `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/comment/?storeId=${storeId}`
     );
-    return response;
+    return response?.data.data;
   } catch (e) {
     console.log("showComment error", e);
   }
