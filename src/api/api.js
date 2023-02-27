@@ -42,7 +42,7 @@ export const showStore = async (id) => {
     );
     return response;
   } catch (e) {
-    console.log(e);
+    console.log("showStore", e);
   }
 };
 
