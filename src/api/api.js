@@ -41,7 +41,9 @@ export const showStore = async (id) => {
       `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/store/?fIshBredTypeId=${id}`
     );
     return response;
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const showDetailStore = async ({ id, token }) => {
@@ -88,5 +90,7 @@ export const deleteStore = async ({ token, id }) => {
       }
     );
     alert(response.data.message);
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 };
