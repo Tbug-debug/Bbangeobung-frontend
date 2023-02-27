@@ -21,6 +21,15 @@ export const postLogin = async (data) => {
     );
 
     console.log(response);
+
+    localStorage.setItem(
+      "userInfo",
+      JSON.stringify({
+        userName: `${response.data.data.username}`,
+        userEmail: `${response.data.data.email}`,
+      })
+    );
+
     HandleToken(response.headers.authorization);
   } catch (e) {
     alert(e.response.data.message);
