@@ -7,7 +7,7 @@ import { FiChevronLeft } from "react-icons/fi";
 import { MdOutlineReport } from "react-icons/md";
 import KakaoMapScript from "../util/KakaoMapScript";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { QueryClient, useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   deleteStore,
   showDetailStore,
@@ -21,12 +21,16 @@ function Detail() {
   const navigate = useNavigate();
   const token = Cookies.get("access_token");
   const { id } = useParams();
+  const queryClient = useQueryClient();
   const { data } = useQuery(
     "showDetail",
     () => showDetailStore({ id, token }),
     { staleTime: Infinity }
   );
-  const queryClient = new QueryClient();
+  const { data: commentList } = useQuery("showPostComment", () =>
+    showComment(id)
+  );
+
   const [comment, setComment] = useState("");
 
   useEffect(() => {
@@ -39,19 +43,19 @@ function Detail() {
       navigate("/");
     },
   });
-
-  function onDelete() {
-    dlelteStoreItem.mutate({ token: token, id: id });
+  function commentSet(e) {
+    setComment(e.target.value);
   }
-
-  const commentData = useQuery("showPostComment", () => showComment(id));
-  console.log(commentData?.data?.data?.data);
 
   const postingComment = useMutation(postComment, {
     onSuccess: () => {
       queryClient.invalidateQueries("showPostComment");
     },
   });
+
+  function onDelete() {
+    dlelteStoreItem.mutate({ token: token, id: id });
+  }
 
   const commentHandler = (e) => {
     e.preventDefault();
@@ -84,7 +88,7 @@ function Detail() {
         <ImageAndContentsBox>
           <ImageSize src={data?.imageURL} />
         </ImageAndContentsBox>
-        {commentData?.data?.data?.data.map((item) => {
+        {commentList?.map((item) => {
           return <CommentList key={item.id} item={item}></CommentList>;
         })}
 
@@ -93,7 +97,7 @@ function Detail() {
             <div>
               <ReviewInput
                 value={comment}
-                onChange={(e) => setComment(e.target.value)}
+                onChange={commentSet}
                 placeholder="리뷰를 입력해주세요."
               />
             </div>
