@@ -12,19 +12,34 @@ import isLogin from "../util/token";
 import Btn from "./Btn";
 
 function Mainpages() {
-  const { data, isLoading, isError } = useQuery("list", () => showStore(""));
   const [openMenu, setOpenMenu] = useState(false);
   const navigate = useNavigate();
+  const [category, setCategory] = useState("");
+  const { data, isLoading } = useQuery(["list", category], () =>
+    showStore(category)
+  );
 
   useEffect(() => {
     if (isLogin() === false) {
       navigate("/login");
     }
-  }, []);
+  }, [navigate]);
 
   const openMenuHandler = () => {
     setOpenMenu(true);
   };
+
+  function clickAllCate() {
+    setCategory("");
+  }
+
+  function clickPotCate() {
+    setCategory("팥");
+  }
+
+  function clickSueCate() {
+    setCategory("슈크림");
+  }
 
   return (
     <MainPageList>
@@ -35,13 +50,19 @@ function Mainpages() {
           </Link>
         </Navbar>
         <Navbar>
-          <Btn categoryBtn>전체</Btn>
+          <Btn onClick={clickAllCate} categoryBtn>
+            전체
+          </Btn>
         </Navbar>
         <Navbar>
-          <Btn categoryBtn>팥</Btn>
+          <Btn onClick={clickPotCate} categoryBtn>
+            팥
+          </Btn>
         </Navbar>
         <Navbar>
-          <Btn categoryBtn>슈크림</Btn>
+          <Btn onClick={clickSueCate} categoryBtn>
+            슈크림
+          </Btn>
         </Navbar>
         <Navbar>
           <FiMenu onClick={openMenuHandler} size={40} />
@@ -53,7 +74,6 @@ function Mainpages() {
         <ListBox>
           {data?.data?.data.map((a) => {
             const price = a.itemList[a.itemList.length - 1]?.price;
-
             return (
               <List
                 key={a.id}
