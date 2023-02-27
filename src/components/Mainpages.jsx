@@ -29,17 +29,15 @@ function Mainpages() {
     setOpenMenu(true);
   };
 
-  function clickAllCate() {
-    setCategory("");
-  }
+  const categoryHandler = (children) => {
+    if (children === "전체") {
+      setCategory("");
+    } else {
+      setCategory(children);
+    }
+  };
 
-  function clickPotCate() {
-    setCategory("팥");
-  }
-
-  function clickSueCate() {
-    setCategory("슈크림");
-  }
+  const handlerArray = ["전체", "팥", "슈크림"];
 
   return (
     <MainPageList>
@@ -49,21 +47,15 @@ function Mainpages() {
             <FiEdit size={40} />
           </Link>
         </Navbar>
-        <Navbar>
-          <Btn onClick={clickAllCate} categoryBtn>
-            전체
-          </Btn>
-        </Navbar>
-        <Navbar>
-          <Btn onClick={clickPotCate} categoryBtn>
-            팥
-          </Btn>
-        </Navbar>
-        <Navbar>
-          <Btn onClick={clickSueCate} categoryBtn>
-            슈크림
-          </Btn>
-        </Navbar>
+        {handlerArray.map((item, index) => {
+          return (
+            <Navbar key={index}>
+              <Btn onClick={() => categoryHandler(item)} categoryBtn>
+                {item}
+              </Btn>
+            </Navbar>
+          );
+        })}
         <Navbar>
           <FiMenu onClick={openMenuHandler} size={40} />
         </Navbar>
