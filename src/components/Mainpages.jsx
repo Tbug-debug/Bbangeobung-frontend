@@ -11,7 +11,7 @@ import Menu from "./Menu";
 import isLogin from "../util/token";
 
 function Mainpages() {
-  const { data, isLoading, isError } = useQuery("list", () => showStore(0));
+  const { data, isLoading } = useQuery("list", () => showStore(""));
   const [openMenu, setOpenMenu] = useState(false);
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ function Mainpages() {
     if (isLogin() === false) {
       navigate("/login");
     }
-  }, []);
+  }, [navigate]);
 
   const openMenuHandler = () => {
     setOpenMenu(true);
@@ -43,7 +43,6 @@ function Mainpages() {
         <ListBox>
           {data?.data?.data.map((a) => {
             const price = a.itemList[a.itemList.length - 1]?.price;
-
             return (
               <List
                 key={a.id}

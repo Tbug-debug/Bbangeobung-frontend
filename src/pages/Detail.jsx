@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Btn from "../components/Btn";
 import Navbar from "../components/Navbar";
@@ -15,9 +15,7 @@ function Detail() {
   const navigate = useNavigate();
   const token = Cookies.get("access_token");
   const { id } = useParams();
-  const { data, isLoading, isError } = useQuery("showDetail", () =>
-    showDetailStore({ id, token })
-  );
+  const { data } = useQuery("showDetail", () => showDetailStore({ id, token }));
   const queryClient = new QueryClient();
 
   // useEffect(() => {
@@ -34,7 +32,7 @@ function Detail() {
 
   const dlelteStoreItem = useMutation(deleteStore, {
     onSuccess: () => {
-      queryClient.invalidateQueries("list");
+      queryClient.invalidateQueries("showDetail");
       navigate("/");
     },
   });
