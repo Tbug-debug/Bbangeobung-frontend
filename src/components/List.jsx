@@ -2,39 +2,28 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FaHeart } from "react-icons/fa";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import Cookies from "js-cookie";
-import { likes, showDetailStore, showlikes } from "../api/api";
+import { likes } from "../api/api";
 
-function List({ contents, imgURL, id, categoryArr, mystorecss }) {
+function List({ contents, imgURL, id, categoryArr, mystorecss, likeCount }) {
   let copyArr = [...categoryArr];
-  const userInfo = localStorage.getItem("userInfo");
-  const userId = JSON.parse(userInfo);
   const token = Cookies.get("access_token");
   const queryClient = useQueryClient();
 
-  const { data } = useQuery("showLikeList", () =>
-    showlikes({ token: token, storeId: id, userId: userId.id })
-  );
-
   const likeButton = useMutation(likes, {
     onSuccess: () => {
-      queryClient.invalidateQueries("showLikeList");
+      queryClient.invalidateQueries("list");
     },
   });
-
   function clickLike() {
     likeButton.mutate({ token: token, storeId: id });
   }
   return (
     <>
       <HearIcon>
-        <FaHeart
-          onClick={clickLike}
-          style={{ color: likeButton?.data?.data?.data ? "red" : "black" }}
-          size={20}
-        ></FaHeart>
-        <span>1</span>
+        <FaHeart onClick={clickLike} size={20}></FaHeart>
+        <span>{likeCount}</span>
       </HearIcon>
       <ListLink mystorecss={mystorecss} to={`/detail/${id}`}>
         <ListItems>

@@ -72,6 +72,7 @@ function Mainpages() {
                 imgURL={a.imageURL}
                 id={a.id}
                 categoryArr={a.itemList}
+                likeCount={a.likeCount}
               />
             );
           })}
