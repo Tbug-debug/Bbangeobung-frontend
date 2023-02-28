@@ -3,7 +3,9 @@ import styled from "styled-components";
 import Btn from "../components/Btn";
 import Navbar from "../components/Navbar";
 import NavWrapper from "../components/NavWrapper";
-import { FiChevronLeft } from "react-icons/fi";
+import CommentList from "../components/comment/CommentList";
+import CommentInput from "../components/comment/CommentInput";
+import { FiChevronLeft, FiArrowUp } from "react-icons/fi";
 import { MdOutlineReport } from "react-icons/md";
 import KakaoMapScript from "../util/KakaoMapScript";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -15,7 +17,6 @@ import {
   showComment,
 } from "../api/api";
 import Cookies from "js-cookie";
-import CommentList from "../components/comment/CommentList";
 
 function Detail() {
   const navigate = useNavigate();
@@ -88,24 +89,21 @@ function Detail() {
         <ImageAndContentsBox>
           <ImageSize src={data?.imageURL} />
         </ImageAndContentsBox>
-        {commentList?.map((item) => {
-          return <CommentList key={item.id} item={item}></CommentList>;
-        })}
-
-        <ReivewInputBox>
-          <form onSubmit={commentHandler}>
-            <div>
-              <ReviewInput
-                value={comment}
-                onChange={commentSet}
-                placeholder="리뷰를 입력해주세요."
-              />
-            </div>
-            <ReviewButton>
-              <Btn>리뷰 작성하기</Btn>
-            </ReviewButton>
-          </form>
-        </ReivewInputBox>
+        <CommentListWrapper>
+          {commentList?.map((item) => {
+            return <CommentList key={item.id} item={item}></CommentList>;
+          })}
+        </CommentListWrapper>
+        <CommentForm onSubmit={commentHandler}>
+          <CommentInput
+            value={comment}
+            onChange={commentSet}
+            placeholder="리뷰를 입력해주세요."
+          />
+          <Btn commentBtn>
+            <FiArrowUp size={33} />
+          </Btn>
+        </CommentForm>
         <DeleteContain>
           <Btn
             deleteItem={onDelete}
@@ -181,47 +179,32 @@ const ImageSize = styled.img`
   border-radius: 20px;
 `;
 
-const ContentsWrapper = styled.div`
-  //border: 0.0625rem solid black;
-  width: 25rem;
-  height: 500px;
-  margin-bottom: 1.875rem;
-  border-radius: 20px;
-  background-color: ${({ theme }) => theme.color.item_bg};
-`;
-
 const DeleteContain = styled.div`
   //border: 0.0625rem solid black;
   margin-top: 1.875rem;
 `;
 
-const ReivewInputBox = styled.div`
+const CommentListWrapper = styled.div`
+  width: 450px;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.color.item_bg};
+`;
+
+const CommentForm = styled.form`
   //border: 0.0625rem solid black;
-  width: 410px;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-`;
-
-const ReviewInput = styled.textarea`
-  font-family: "KCC-Ganpan";
-  resize: none;
-  width: 400px;
-  height: 300px;
-  font-size: 15px;
-  border: 0;
-  border-radius: 15px;
-  outline: none;
-  padding-left: 10px;
-  background-color: rgb(252, 247, 247);
-`;
-
-const ReviewButton = styled.div`
-  //border: 0.0625rem solid black;
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
+  width: 450px;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    border-radius: 15px;
+  }
 `;
 
 export default Detail;
