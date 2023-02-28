@@ -6,6 +6,7 @@ import NavWrapper from "../components/NavWrapper";
 import CommentList from "../components/comment/CommentList";
 import CommentInput from "../components/comment/CommentInput";
 import { FiChevronLeft, FiArrowUp } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 import { MdOutlineReport } from "react-icons/md";
 import KakaoMapScript from "../util/KakaoMapScript";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -120,9 +121,14 @@ function Detail() {
             <FiChevronLeft size={40}></FiChevronLeft>
           </Link>
         </Navbar>
-        <Navbar>
-          <ReportIcon onClick={clickReport} size={37}></ReportIcon>
-        </Navbar>
+        <BtnWrapper>
+          <Navbar>
+            <FaHeart className="like_btn" size={30}></FaHeart>
+          </Navbar>
+          <Navbar>
+            <ReportIcon onClick={clickReport} size={37}></ReportIcon>
+          </Navbar>
+        </BtnWrapper>
       </NavWrapper>
       <DetailContentBox>
         <KakaoMap id="mymap"></KakaoMap>
@@ -231,6 +237,13 @@ const DetailContentBox = styled.div`
   align-items: center;
   margin-top: 5rem;
   margin-bottom: 3.125rem;
+`;
+
+const BtnWrapper = styled.div`
+  display: flex;
+  .like_btn {
+    margin-top: 4px;
+  }
 `;
 
 const ContentName = styled.div`
