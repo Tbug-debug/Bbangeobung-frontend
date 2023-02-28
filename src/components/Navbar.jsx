@@ -15,6 +15,9 @@ const NavBar = styled.div`
 
 const NavBarIcon = styled.div`
   margin: 20px 25px;
+  button {
+    margin-top: 5px;
+  }
 `;
 
 export default Navbar;

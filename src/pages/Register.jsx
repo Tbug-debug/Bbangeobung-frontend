@@ -129,110 +129,125 @@ function Register() {
 
   return (
     <>
-      <NavWrapper>
-        <Navbar>
-          <Link to={"/"}>
-            <FiChevronLeft size={40} />
-          </Link>
-        </Navbar>
-      </NavWrapper>
-      <RegisterBox>
-        <Form onSubmit={handleSubmit}>
-          <RegisterRegistorTitle>
-            &lt;붕어빵 사진 아니면 IP 벤 ㅅㄱ&gt;
-          </RegisterRegistorTitle>
-          <FileInput type="file" accept="image/*" onChange={onChangeimge} />
-          <RegisterInputTitle>&lt;붕어빵 위치 좌표! &gt;</RegisterInputTitle>
-          <PositonInput
-            disabled
-            type="text"
-            value={long}
-            onChange={onLongInput}
-          />
-          <PositonInput
-            disabled
-            type="text"
-            value={lati}
-            onChange={onLatiInput}
-          />
-          <RegisterSpan>&lt;가게 설명... &gt;</RegisterSpan>
-          <RegisterInput
-            placeholder="붕어빵 가게 설명은 10글자 이하로!"
-            type="text"
-            value={body}
-            onChange={onBodyInput}
-          />
-        </Form>
-        <RegisterSelectTitle>&lt;붕어빵 종류 & 가격! &gt;</RegisterSelectTitle>
-        <FieldContainer>
-          <FieldWrapper>
-            <Btn onClick={addField} disabled={isAddButtonDisabled}>
-              {isAddButtonDisabled
-                ? "마지막 붕어빵이에요. 추가 불가능해요."
-                : "붕어빵 종류 더 있어요."}
+      <RegisterContainer>
+        <NavWrapper>
+          <Navbar>
+            <Link to={"/"}>
+              <FiChevronLeft size={40} />
+            </Link>
+          </Navbar>
+        </NavWrapper>
+        <RegisterBox>
+          <Form onSubmit={handleSubmit}>
+            <RegisterRegistorTitle>
+              &lt;붕어빵 사진 아니면 IP 벤 ㅅㄱ&gt;
+            </RegisterRegistorTitle>
+            <FileInput type="file" accept="image/*" onChange={onChangeimge} />
+            <RegisterInputTitle>&lt;붕어빵 위치 좌표! &gt;</RegisterInputTitle>
+            <PositonInput
+              disabled
+              type="text"
+              value={long}
+              onChange={onLongInput}
+            />
+            <PositonInput
+              disabled
+              type="text"
+              value={lati}
+              onChange={onLatiInput}
+            />
+            <RegisterSpan>&lt;가게 설명... &gt;</RegisterSpan>
+            <RegisterInput
+              placeholder="붕어빵 가게 설명은 10글자 이하로!"
+              type="text"
+              value={body}
+              onChange={onBodyInput}
+            />
+          </Form>
+          <RegisterSelectTitle>
+            &lt;붕어빵 종류 & 가격! &gt;
+          </RegisterSelectTitle>
+          <FieldContainer>
+            <FieldWrapper>
+              <Btn onClick={addField} disabled={isAddButtonDisabled}>
+                {isAddButtonDisabled
+                  ? "마지막 붕어빵이에요. 추가 불가능해요."
+                  : "붕어빵 종류 더 있어요."}
+              </Btn>
+              {fields.map((field) => (
+                <div key={field.id}>
+                  <SelectBox
+                    value={field.name}
+                    onChange={(event) =>
+                      handleSelectChangeWrapper(field.id, event)
+                    }
+                  >
+                    <SelectOption disabled value="">
+                      Select an option
+                    </SelectOption>
+                    <SelectOption
+                      value="팥붕어빵"
+                      disabled={
+                        fields.some(
+                          (f) =>
+                            f.id === 1 && f.id !== field.id && field.id !== 1
+                        ) || field.name === ""
+                      }
+                    >
+                      팥붕어빵
+                    </SelectOption>
+                    <SelectOption
+                      value="슈크림붕어빵"
+                      disabled={
+                        fields.some(
+                          (f) =>
+                            f.id === 2 && f.id !== field.id && field.id !== 2
+                        ) || field.name === ""
+                      }
+                    >
+                      슈크림붕어빵
+                    </SelectOption>
+                  </SelectBox>
+                  <SelectInput
+                    type="text"
+                    value={field.price}
+                    placeholder="붕어빵 가격은 얼마?"
+                    onChange={(event) =>
+                      handleInputChangeWrapper(field.id, event)
+                    }
+                  />
+                  <Btn
+                    smBtn
+                    delete
+                    onClick={() => handleDeleteWrapper(field.id)}
+                  >
+                    Delete
+                  </Btn>
+                </div>
+              ))}
+            </FieldWrapper>
+            <Btn registerBtn disabled={fields <= 0} onClick={handleSubmit}>
+              붕어빵 제출하기
             </Btn>
-            {fields.map((field) => (
-              <div key={field.id}>
-                <SelectBox
-                  value={field.name}
-                  onChange={(event) =>
-                    handleSelectChangeWrapper(field.id, event)
-                  }
-                >
-                  <SelectOption disabled value="">
-                    Select an option
-                  </SelectOption>
-                  <SelectOption
-                    value="팥붕어빵"
-                    disabled={
-                      fields.some(
-                        (f) => f.id === 1 && f.id !== field.id && field.id !== 1
-                      ) || field.name === ""
-                    }
-                  >
-                    팥붕어빵
-                  </SelectOption>
-                  <SelectOption
-                    value="슈크림붕어빵"
-                    disabled={
-                      fields.some(
-                        (f) => f.id === 2 && f.id !== field.id && field.id !== 2
-                      ) || field.name === ""
-                    }
-                  >
-                    슈크림붕어빵
-                  </SelectOption>
-                </SelectBox>
-                <SelectInput
-                  type="text"
-                  value={field.price}
-                  placeholder="붕어빵 가격은 얼마?"
-                  onChange={(event) =>
-                    handleInputChangeWrapper(field.id, event)
-                  }
-                />
-                <Btn smBtn delete onClick={() => handleDeleteWrapper(field.id)}>
-                  Delete
-                </Btn>
-              </div>
-            ))}
-          </FieldWrapper>
-          <Btn registerBtn disabled={fields <= 0} onClick={handleSubmit}>
-            붕어빵 제출하기
-          </Btn>
-        </FieldContainer>
-      </RegisterBox>
+          </FieldContainer>
+        </RegisterBox>
+      </RegisterContainer>
     </>
   );
 }
+
+const RegisterContainer = styled.div`
+  height: 100%;
+  overflow: auto;
+`;
 
 const RegisterBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  margin-top: 70px;
+  margin-top: 100px;
+  margin-bottom: 20px;
 `;
 
 const Form = styled.form`
