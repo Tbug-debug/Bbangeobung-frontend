@@ -1,12 +1,41 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { FaHeart } from "react-icons/fa";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import Cookies from "js-cookie";
+import { likes, showDetailStore, showlikes } from "../api/api";
 
 function List({ contents, imgURL, id, categoryArr, mystorecss }) {
   let copyArr = [...categoryArr];
+  const userInfo = localStorage.getItem("userInfo");
+  const userId = JSON.parse(userInfo);
+  const token = Cookies.get("access_token");
+  const queryClient = useQueryClient();
 
+  const { data } = useQuery("showLikeList", () =>
+    showlikes({ token: token, storeId: id, userId: userId.id })
+  );
+
+  const likeButton = useMutation(likes, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("showLikeList");
+    },
+  });
+
+  function clickLike() {
+    likeButton.mutate({ token: token, storeId: id });
+  }
   return (
     <>
+      <HearIcon>
+        <FaHeart
+          onClick={clickLike}
+          style={{ color: likeButton?.data?.data?.data ? "red" : "black" }}
+          size={20}
+        ></FaHeart>
+        <span>1</span>
+      </HearIcon>
       <ListLink mystorecss={mystorecss} to={`/detail/${id}`}>
         <ListItems>
           <ImageBox>
@@ -54,6 +83,20 @@ const ItemInfo = styled.div`
   justify-content: center;
   width: 100%;
   padding: 0.625rem;
+`;
+
+const HearIcon = styled.div`
+  //border: 1px solid black;
+  position: relative;
+  top: 80px;
+  left: 170px;
+  display: flex;
+  justify-content: center;
+  span {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
 `;
 
 const ListItems = styled.div`
