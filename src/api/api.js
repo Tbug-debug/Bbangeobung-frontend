@@ -150,7 +150,42 @@ export const postReport = async ({ token, storeId, reason }) => {
         },
       }
     );
-    console.log(response);
+    alert(response.data.code === 200 ? "신고했붕어!" : "문제가 생겼붕어");
+  } catch (e) {
+    console.log("postReport error", e);
+  }
+};
+
+export const deleteComment = async ({ token, commentId }) => {
+  try {
+    const response = await axios.delete(
+      `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/comment/${commentId}`,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    alert(response.data.code === 200 ? "왜 리뷰 삭제붕어?" : "문제가 생겼붕어");
+  } catch (e) {
+    console.log("postReport error", e);
+  }
+};
+
+export const editingComment = async ({ token, commentId, body }) => {
+  try {
+    const response = await axios.put(
+      `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/comment/${commentId}`,
+      body,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    alert(response.data.code === 200 ? "리뷰 수정했붕어" : "문제가 생겼붕어");
   } catch (e) {
     console.log("postReport error", e);
   }
