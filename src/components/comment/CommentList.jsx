@@ -18,15 +18,15 @@ const CommentList = ({ item, edithand }) => {
     }
   }, []);
 
-  const deletComment = useMutation(deleteComment, {
+  const deleteCommentQuery = useMutation(deleteComment, {
     onSuccess: () => {
       queryClient.invalidateQueries("showPostComment");
     },
   });
 
-  function deleteStore(id) {
-    deletComment.mutate({ token: token, commentId: id });
-  }
+  const deleteStore = (id) => {
+    deleteCommentQuery.mutate({ token: token, commentId: id });
+  };
 
   return (
     <>
