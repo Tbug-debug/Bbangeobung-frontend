@@ -134,10 +134,15 @@ function Detail() {
         <KakaoMap id="mymap"></KakaoMap>
         <ContentName>
           <ContentNameText>
-            <ContentNameTextTitle>
-              {data?.content} : {data?.itemList[0]?.name}
-            </ContentNameTextTitle>
-            가격: {data?.itemList[0]?.price}원
+            <ContentNameTextTitle>{data?.content}</ContentNameTextTitle>
+            {data?.itemList[0]?.name} {data?.itemList[0]?.price ? ":" : ""}{" "}
+            {data?.itemList[0]?.price}
+            {data?.itemList[0]?.name ? "원" : ""}
+            <br />
+            <div>
+              {data?.itemList[1]?.name} {data?.itemList[1]?.name ? ":" : ""}{" "}
+              {data?.itemList[1]?.price} {data?.itemList[1]?.name ? "원" : ""}
+            </div>
           </ContentNameText>
         </ContentName>
         <ImageAndContentsBox>
@@ -250,7 +255,7 @@ const ContentName = styled.div`
   border: 3px solid white;
   border-radius: 30px;
   width: 300px;
-  height: 50px;
+  height: 80px;
   margin-top: 50px;
   display: flex;
   justify-content: center;
@@ -261,9 +266,10 @@ const ContentName = styled.div`
 const ContentNameText = styled.div`
   //border: 1px solid blue;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
   flex-direction: column;
+  height: 80%;
 `;
 
 const ContentNameTextTitle = styled.div`
