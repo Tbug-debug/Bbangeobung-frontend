@@ -12,12 +12,11 @@ const CommentInput = ({ children, ...props }) => {
 const CommentInputBox = styled.input`
   width: 389px;
   height: 39px;
+  padding-left: 10px;
   border: 0;
   border-radius: 15px;
   outline: none;
-  padding-left: 10px;
   background-color: ${({ theme }) => theme.color.input_bg};
-  font-family: "KCC-Ganpan";
   font-size: 15px;
 `;
 

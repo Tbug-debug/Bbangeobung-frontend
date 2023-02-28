@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FiTrash, FiEdit2 } from "react-icons/fi";
+import { MdOutlineReport } from "react-icons/md";
 import { deleteComment } from "../../api/api";
 import { useMutation, useQueryClient } from "react-query";
 import Cookies from "js-cookie";
@@ -18,39 +19,44 @@ const CommentList = ({ item, edithand }) => {
     }
   }, []);
 
-  const deletComment = useMutation(deleteComment, {
+  const deleteCommentQuery = useMutation(deleteComment, {
     onSuccess: () => {
       queryClient.invalidateQueries("showPostComment");
     },
   });
 
-  function deleteStore(id) {
-    deletComment.mutate({ token: token, commentId: id });
-  }
+  const deleteStore = (id) => {
+    deleteCommentQuery.mutate({ token: token, commentId: id });
+  };
 
   return (
     <>
       <CommentListItem>
         <CommentSpan>{item.username}</CommentSpan>
         <CommentSpan>{item.comment}</CommentSpan>
-        {checkUser && (
-          <>
-            <CommentSpan>
-              <FiEdit2
-                onClick={() => edithand(item.id)}
-                size={25}
-                className="edit"
-              />
-            </CommentSpan>
-            <CommentSpan>
-              <FiTrash
-                onClick={() => deleteStore(item.id)}
-                size={25}
-                className="trash"
-              />
-            </CommentSpan>
-          </>
-        )}
+        <div>
+          {checkUser && (
+            <>
+              <CommentSpan>
+                <FiEdit2
+                  onClick={() => edithand(item.id)}
+                  size={25}
+                  className="edit"
+                />
+              </CommentSpan>
+              <CommentSpan>
+                <FiTrash
+                  onClick={() => deleteStore(item.id)}
+                  size={25}
+                  className="trash"
+                />
+              </CommentSpan>
+            </>
+          )}
+          <CommentSpan>
+            <MdOutlineReport className="report" size={25} />
+          </CommentSpan>
+        </div>
       </CommentListItem>
     </>
   );
@@ -58,6 +64,7 @@ const CommentList = ({ item, edithand }) => {
 
 const CommentListItem = styled.div`
   display: flex;
+  align-items: center;
   :last-child {
     justify-content: center;
   }
@@ -73,16 +80,7 @@ const CommentListItem = styled.div`
     width: 230px;
     word-wrap: break-word;
   }
-  span:nth-child(3) {
-    flex-grow: 1;
-    margin: auto;
-    padding-left: 10px;
-  }
-  span:nth-child(4) {
-    flex-grow: 1;
-    margin: auto;
-    padding-left: 1px;
-  }
+
   .trash {
     padding: 4px;
     border-radius: 5px;
