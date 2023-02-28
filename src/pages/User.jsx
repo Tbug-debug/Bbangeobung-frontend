@@ -46,7 +46,7 @@ function User() {
                   imgURL={item.imageURL}
                   id={item.id}
                   categoryArr={item.itemList}
-                  myStore="true"
+                  mystorecss="true"
                 ></List>
               );
             })}

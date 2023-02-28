@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-function List({ contents, imgURL, id, categoryArr, category, myStore }) {
+function List({ contents, imgURL, id, categoryArr, category, mystorecss }) {
   let copyArr = [...categoryArr];
 
   if (category === "팥") {
@@ -12,12 +12,12 @@ function List({ contents, imgURL, id, categoryArr, category, myStore }) {
   }
   return (
     <>
-      <ListLink myStore={myStore} to={`/detail/${id}`}>
+      <ListLink mystorecss={mystorecss} to={`/detail/${id}`}>
         <ListItems>
           <ImageBox>
             <Image src={imgURL} />
           </ImageBox>
-          <ItemInfo myStore={myStore}>
+          <ItemInfo mystorecss={mystorecss}>
             <Span title="true">가게 정보</Span>
             <Span>{contents}</Span>
             <Span title="true">가격 정보</Span>
@@ -41,7 +41,7 @@ const ListLink = styled(Link)`
   border-radius: 20px;
   background-color: ${({ theme }) => theme.color.item_bg};
   ${(props) =>
-    props.myStore &&
+    props.mystorecss &&
     css`
       margin: 0;
       padding: 15px 0;
