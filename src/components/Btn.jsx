@@ -78,6 +78,13 @@ const BtnStyle = styled.button`
       background-color: #7b8fa1;
       color: white;
     `}
+    ${(props) =>
+    props.commentBtn &&
+    css`
+      width: 60px;
+      height: 39px;
+      background-color: ${({ theme }) => theme.color.btn_success};
+    `}
 `;
 
 export default Btn;
