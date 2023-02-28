@@ -28,7 +28,7 @@ function Detail() {
   const { data } = useQuery(
     ["showDetail", id],
     () => showDetailStore({ id, token }),
-    { staleTime: 1000 * 50 }
+    { staleTime: 240000 }
   );
   const { data: commentList } = useQuery("showPostComment", () =>
     showComment(id)
