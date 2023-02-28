@@ -25,9 +25,9 @@ function Detail() {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const { data } = useQuery(
-    "showDetail",
+    ["showDetail", id],
     () => showDetailStore({ id, token }),
-    { staleTime: 240000 }
+    { staleTime: 1000 * 20 }
   );
   const { data: commentList } = useQuery("showPostComment", () =>
     showComment(id)
@@ -37,12 +37,11 @@ function Detail() {
   const [report, setReport] = useState("");
 
   useEffect(() => {
-    KakaoMapScript(data?.latitude, data?.longitude);
+    KakaoMapScript(data?.longitude, data?.latitude);
   }, [data?.latitude, data?.longitude]);
 
   const dlelteStoreItem = useMutation(deleteStore, {
     onSuccess: () => {
-      queryClient.invalidateQueries("list");
       navigate("/");
     },
   });

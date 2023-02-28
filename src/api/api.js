@@ -72,7 +72,9 @@ export const postStore = async ({ token, data }) => {
         },
       }
     );
-    alert(response.data.message);
+    alert(
+      response.data.code === 200 ? "붕어빵 생겼붕어!" : response.data.message
+    );
   } catch (e) {
     console.log("postStore", e);
   }
@@ -89,9 +91,17 @@ export const deleteStore = async ({ token, id }) => {
         },
       }
     );
-    alert(response.data.message);
+    alert(
+      response.data.code === 200
+        ? "붕어빵 먹어치웠붕어!"
+        : response.data.message
+    );
   } catch (e) {
-    console.log("deleteStore", e);
+    alert(
+      e.response.data.code === 400
+        ? "이 붕어빵 본인꺼 맞붕어?"
+        : e.response.data.message
+    );
   }
 };
 
@@ -109,7 +119,11 @@ export const postComment = async ({ token, commentInfo }) => {
     );
     return response.data.data.comment;
   } catch (e) {
-    console.log("postComment error", e);
+    alert(
+      e.response.data.code === 400
+        ? "리뷰에 문제가 생겼붕어"
+        : e.response.data.message
+    );
   }
 };
 

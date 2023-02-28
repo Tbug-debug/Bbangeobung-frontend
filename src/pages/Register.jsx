@@ -37,7 +37,7 @@ function Register() {
   }
 
   function onFailure() {
-    alert("위치 정보를 찾을수가 없습니다.");
+    alert("위치 정보를 찾을수가 없습붕어");
   }
 
   navigator.geolocation.getCurrentPosition(onSucces, onFailure);
@@ -205,7 +205,7 @@ function Register() {
                 </SelectBox>
                 <SelectInput
                   type="text"
-                  value={field.inputValue}
+                  value={field.price}
                   placeholder="붕어빵 가격은 얼마?"
                   onChange={(event) =>
                     handleInputChangeWrapper(field.id, event)
