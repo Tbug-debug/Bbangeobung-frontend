@@ -6,7 +6,6 @@ import NavWrapper from "../components/NavWrapper";
 import CommentList from "../components/comment/CommentList";
 import CommentInput from "../components/comment/CommentInput";
 import { FiChevronLeft, FiArrowUp } from "react-icons/fi";
-import { FaHeart } from "react-icons/fa";
 import { MdOutlineReport } from "react-icons/md";
 import KakaoMapScript from "../util/KakaoMapScript";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -42,12 +41,6 @@ function Detail() {
   const [report, setReport] = useState("");
   const [edit, setEdit] = useState(true);
   const [ids, setIds] = useState("");
-  const userInfo = localStorage.getItem("userInfo");
-  const userId = JSON.parse(userInfo);
-
-  const { data: likeList } = useQuery("showLikeList", () =>
-    showlikes({ token: token, storeId: id, userId: userId.id })
-  );
 
   useEffect(() => {
     KakaoMapScript(data?.longitude, data?.latitude);
@@ -72,12 +65,6 @@ function Detail() {
   const editsComment = useMutation(editingComment, {
     onSuccess: () => {
       queryClient.invalidateQueries("showPostComment");
-    },
-  });
-
-  const likeButton = useMutation(likes, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("showLikeList");
     },
   });
 
@@ -127,10 +114,6 @@ function Detail() {
     editsComment.mutate({ token: token, commentId: ids, body: editBody });
   }
 
-  function clickLike() {
-    likeButton.mutate({ token: token, storeId: id });
-  }
-
   return (
     <DetailBox>
       <NavWrapper>
@@ -140,16 +123,7 @@ function Detail() {
           </Link>
         </Navbar>
         <BtnWrapper>
-          <Navbar>
-            <FaHeart
-              onClick={clickLike}
-              className="like_btn"
-              style={{
-                color: likeList?.data?.data?.isMyLike ? "#F96666" : "black",
-              }}
-              size={30}
-            ></FaHeart>
-          </Navbar>
+          <Navbar></Navbar>
           <Navbar>
             <ReportIcon onClick={clickReport} size={37}></ReportIcon>
           </Navbar>
@@ -271,9 +245,6 @@ const DetailContentBox = styled.div`
 
 const BtnWrapper = styled.div`
   display: flex;
-  .like_btn {
-    margin-top: 4px;
-  }
 `;
 
 const ContentName = styled.div`

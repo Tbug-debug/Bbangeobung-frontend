@@ -219,7 +219,7 @@ export const likes = async ({ token, storeId }) => {
         },
       }
     );
-    console.log(response?.data);
+
     return response;
   } catch (error) {
     console.log(error);
