@@ -13,6 +13,7 @@ import {
   showDetailStore,
   postComment,
   showComment,
+  postReport,
 } from "../api/api";
 import Cookies from "js-cookie";
 import CommentList from "../components/comment/CommentList";
@@ -25,16 +26,17 @@ function Detail() {
   const { data } = useQuery(
     "showDetail",
     () => showDetailStore({ id, token }),
-    { staleTime: Infinity }
+    { staleTime: 240000 }
   );
   const { data: commentList } = useQuery("showPostComment", () =>
     showComment(id)
   );
-
+  const [modal, setModal] = useState(false);
   const [comment, setComment] = useState("");
+  const [report, setReport] = useState("");
 
   useEffect(() => {
-    KakaoMapScript(data?.longitude, data?.latitude);
+    KakaoMapScript(data?.latitude, data?.longitude);
   }, [data?.latitude, data?.longitude]);
 
   const dlelteStoreItem = useMutation(deleteStore, {
@@ -43,9 +45,6 @@ function Detail() {
       navigate("/");
     },
   });
-  function commentSet(e) {
-    setComment(e.target.value);
-  }
 
   const postingComment = useMutation(postComment, {
     onSuccess: () => {
@@ -53,15 +52,36 @@ function Detail() {
     },
   });
 
-  function onDelete() {
-    dlelteStoreItem.mutate({ token: token, id: id });
-  }
+  const postingReport = useMutation(postReport, {
+    onSuccess: () => {},
+  });
 
   const commentHandler = (e) => {
     e.preventDefault();
     const commentInfo = { comment: comment, storeId: Number(id) };
     postingComment.mutate({ token, commentInfo });
   };
+
+  function commentSet(e) {
+    setComment(e.target.value);
+  }
+
+  function onDelete() {
+    dlelteStoreItem.mutate({ token: token, id: id });
+  }
+
+  const clickReport = () => {
+    setModal(!modal);
+  };
+
+  function onChangeReport(e) {
+    setReport(e.target.value);
+  }
+
+  function submitReport(e) {
+    e.preventDefault();
+    postingReport.mutate({ token: token, storeId: id, reason: report });
+  }
 
   return (
     <DetailBox>
@@ -72,7 +92,7 @@ function Detail() {
           </Link>
         </Navbar>
         <Navbar>
-          <MdOutlineReport size={37}></MdOutlineReport>
+          <ReportIcon onClick={clickReport} size={37}></ReportIcon>
         </Navbar>
       </NavWrapper>
       <DetailContentBox>
@@ -113,6 +133,26 @@ function Detail() {
             children={"이 붕어빵은 작성자만 삭제가능해요."}
           ></Btn>
         </DeleteContain>
+        {modal ? (
+          <Madalback>
+            <ModalContents>
+              <ModalTitleBox>
+                <ModalClose onClick={clickReport}>닫기</ModalClose>
+                <ModalTitle>신고 사유를 입력해주세붕어.</ModalTitle>
+              </ModalTitleBox>
+              <ModalTextAreaDiv>
+                <form onSubmit={submitReport}>
+                  <ModalTextArea
+                    value={report}
+                    onChange={onChangeReport}
+                    type="text"
+                  />
+                  <Btn small report children={"제출하기"}></Btn>
+                </form>
+              </ModalTextAreaDiv>
+            </ModalContents>
+          </Madalback>
+        ) : null}
       </DetailContentBox>
     </DetailBox>
   );
@@ -132,6 +172,10 @@ const DetailBox = styled.div`
   //border: 1px solid red;
   overflow: auto;
   height: 100%;
+`;
+
+const ReportIcon = styled(MdOutlineReport)`
+  cursor: pointer;
 `;
 
 const DetailContentBox = styled.div`
@@ -181,15 +225,6 @@ const ImageSize = styled.img`
   border-radius: 20px;
 `;
 
-const ContentsWrapper = styled.div`
-  //border: 0.0625rem solid black;
-  width: 25rem;
-  height: 500px;
-  margin-bottom: 1.875rem;
-  border-radius: 20px;
-  background-color: ${({ theme }) => theme.color.item_bg};
-`;
-
 const DeleteContain = styled.div`
   //border: 0.0625rem solid black;
   margin-top: 1.875rem;
@@ -222,6 +257,69 @@ const ReviewButton = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 30px;
+`;
+const Madalback = styled.div`
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 11;
+`;
+
+const ModalTitleBox = styled.div`
+  //border: 0.0625rem solid black;
+  font-family: "KCC-Ganpan";
+`;
+
+const ModalClose = styled.span`
+  position: relative;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  :hover {
+    color: ${({ theme }) => theme.color.btn_danger};
+  }
+`;
+
+const ModalTitle = styled.span`
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+`;
+
+const ModalContents = styled.div`
+  width: 400px;
+  height: 350px;
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: ${({ theme }) => theme.color.btn_success};
+  border-radius: 10px;
+`;
+
+const ModalTextAreaDiv = styled.div`
+  height: 100%;
+  form {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+`;
+
+const ModalTextArea = styled.textarea`
+  width: 300px;
+  height: 150px;
+  resize: none;
+  border-radius: 10px;
+  outline: none;
 `;
 
 export default Detail;

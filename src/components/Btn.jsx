@@ -45,6 +45,8 @@ const BtnStyle = styled.button`
   ${(props) =>
     props.report &&
     css`
+      width: 100px;
+      margin-top: 20px;
       background-color: ${({ theme }) => theme.color.btn_report};
     `}
     ${(props) =>

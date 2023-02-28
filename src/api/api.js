@@ -123,3 +123,21 @@ export const showComment = async (storeId) => {
     console.log("showComment error", e);
   }
 };
+
+export const postReport = async ({ token, storeId, reason }) => {
+  try {
+    const response = await axios.post(
+      `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/report/store/${storeId}`,
+      reason,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    console.log(response);
+  } catch (e) {
+    console.log("postReport error", e);
+  }
+};
