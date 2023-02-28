@@ -16,6 +16,7 @@ import {
   postComment,
   showComment,
   postReport,
+  editingComment,
 } from "../api/api";
 import Cookies from "js-cookie";
 
@@ -27,14 +28,17 @@ function Detail() {
   const { data } = useQuery(
     ["showDetail", id],
     () => showDetailStore({ id, token }),
-    { staleTime: 1000 * 20 }
+    { staleTime: 1000 * 50 }
   );
   const { data: commentList } = useQuery("showPostComment", () =>
     showComment(id)
   );
   const [modal, setModal] = useState(false);
   const [comment, setComment] = useState("");
+  const [editComment, setEditComment] = useState("");
   const [report, setReport] = useState("");
+  const [edit, setEdit] = useState(true);
+  const [ids, setIds] = useState("");
 
   useEffect(() => {
     KakaoMapScript(data?.longitude, data?.latitude);
@@ -54,6 +58,12 @@ function Detail() {
 
   const postingReport = useMutation(postReport, {
     onSuccess: () => {},
+  });
+
+  const editsComment = useMutation(editingComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("showPostComment");
+    },
   });
 
   const commentHandler = (e) => {
@@ -81,6 +91,25 @@ function Detail() {
   function submitReport(e) {
     e.preventDefault();
     postingReport.mutate({ token: token, storeId: id, reason: report });
+    setModal(false);
+  }
+
+  function editHandler(id) {
+    setEdit(!edit);
+    setIds(id);
+  }
+
+  function changeEdit(e) {
+    setEditComment(e.target.value);
+  }
+
+  function editForm(e) {
+    e.preventDefault();
+    const editBody = {
+      comment: editComment,
+      storeId: id,
+    };
+    editsComment.mutate({ token: token, commentId: ids, body: editBody });
   }
 
   return (
@@ -110,19 +139,39 @@ function Detail() {
         </ImageAndContentsBox>
         <CommentListWrapper>
           {commentList?.map((item) => {
-            return <CommentList key={item.id} item={item}></CommentList>;
+            return (
+              <CommentList
+                key={item.id}
+                edithand={editHandler}
+                item={item}
+              ></CommentList>
+            );
           })}
         </CommentListWrapper>
-        <CommentForm onSubmit={commentHandler}>
-          <CommentInput
-            value={comment}
-            onChange={commentSet}
-            placeholder="리뷰를 입력해주세요."
-          />
-          <Btn commentBtn>
-            <FiArrowUp size={33} />
-          </Btn>
-        </CommentForm>
+        {edit ? (
+          <CommentForm onSubmit={commentHandler}>
+            <CommentInput
+              value={comment}
+              onChange={commentSet}
+              placeholder="리뷰를 입력해주세요."
+            />
+            <Btn commentBtn>
+              <FiArrowUp size={33} />
+            </Btn>
+          </CommentForm>
+        ) : (
+          <CommentForm onSubmit={editForm}>
+            <CommentInput
+              value={editComment}
+              onChange={changeEdit}
+              placeholder="수정할 내용을 입력해주세요."
+            />
+            <SubmitButton commentBtn>
+              <FiArrowUp size={33} />
+            </SubmitButton>
+          </CommentForm>
+        )}
+
         <DeleteContain>
           <Btn
             deleteItem={onDelete}
@@ -249,6 +298,11 @@ const CommentForm = styled.form`
     border-radius: 15px;
   }
 `;
+
+const SubmitButton = styled(Btn)`
+  background-color: ${({ theme }) => theme.color.btn_danger};
+`;
+
 const Madalback = styled.div`
   position: absolute;
   top: 0;

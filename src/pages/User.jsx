@@ -15,7 +15,6 @@ function User() {
   const token = Cookies.get("access_token");
   const { data } = useQuery("myStoreList", () => myStore({ token }));
   const myStoreListArr = data?.data;
-  console.log("myStoreListArr", myStoreListArr);
   return (
     <>
       <NavWrapper>

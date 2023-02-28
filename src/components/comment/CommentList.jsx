@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FiTrash, FiEdit2 } from "react-icons/fi";
+import { deleteComment } from "../../api/api";
+import { useMutation, useQueryClient } from "react-query";
+import Cookies from "js-cookie";
 
-const CommentList = ({ item }) => {
+const CommentList = ({ item, edithand }) => {
   const localUserName = JSON.parse(localStorage.getItem("userInfo"));
+  const token = Cookies.get("access_token");
+  const queryClient = useQueryClient();
 
   const [checkUser, setCheckUser] = useState(false);
 
@@ -13,6 +18,16 @@ const CommentList = ({ item }) => {
     }
   }, []);
 
+  const deletComment = useMutation(deleteComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("showPostComment");
+    },
+  });
+
+  function deleteStore(id) {
+    deletComment.mutate({ token: token, commentId: id });
+  }
+
   return (
     <>
       <CommentListItem>
@@ -21,10 +36,18 @@ const CommentList = ({ item }) => {
         {checkUser && (
           <>
             <CommentSpan>
-              <FiEdit2 size={25} className="edit" />
+              <FiEdit2
+                onClick={() => edithand(item.id)}
+                size={25}
+                className="edit"
+              />
             </CommentSpan>
             <CommentSpan>
-              <FiTrash size={25} className="trash" />
+              <FiTrash
+                onClick={() => deleteStore(item.id)}
+                size={25}
+                className="trash"
+              />
             </CommentSpan>
           </>
         )}
