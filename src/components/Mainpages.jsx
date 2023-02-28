@@ -65,14 +65,14 @@ function Mainpages() {
       ) : (
         <ListBox>
           {data?.data?.data.map((a) => {
-            const price = a.itemList[a.itemList.length - 1]?.price;
             return (
               <List
                 key={a.id}
                 contents={a.content}
                 imgURL={a.imageURL}
-                price={price}
                 id={a.id}
+                categoryArr={a.itemList}
+                category={category}
               />
             );
           })}

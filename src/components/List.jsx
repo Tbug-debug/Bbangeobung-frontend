@@ -1,67 +1,88 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-function List({ contents, imgURL, price, id }) {
+function List({ contents, imgURL, id, categoryArr, category }) {
+  let copyArr = [...categoryArr];
+
+  if (category === "팥") {
+    copyArr = copyArr.filter((item) => !item.name.includes("슈크림붕어빵"));
+  } else if (category === "슈크림") {
+    copyArr = copyArr.filter((item) => !item.name.includes("팥붕어빵"));
+  }
+
   return (
-    <Lists>
-      <StyledLink to={`/detail/${id}`}>
+    <>
+      <ListLink to={`/detail/${id}`}>
         <ListItems>
-          <div>
+          <ImageBox>
             <Image src={imgURL} />
-          </div>
-          <ListItemPriceAndContent>
-            <div>{contents}</div>
-            <div>{price}원</div>
-          </ListItemPriceAndContent>
+          </ImageBox>
+          <ItemInfo>
+            <Span title="true">가게 정보</Span>
+            <Span>{contents}</Span>
+            <Span title="true">가격 정보</Span>
+            {copyArr.map((item, index) => {
+              return (
+                <Span key={index}>
+                  · {item.name} : {item.price} 원
+                </Span>
+              );
+            })}
+          </ItemInfo>
         </ListItems>
-      </StyledLink>
-    </Lists>
+      </ListLink>
+    </>
   );
 }
 
-const Lists = styled.div`
-  font-family: "KCC-Ganpan";
-  width: 25rem;
-  height: 5rem;
-  margin: 2rem;
+const ListLink = styled(Link)`
+  width: 430px;
+  margin-top: 30px;
+  border-radius: 20px;
   background-color: ${({ theme }) => theme.color.item_bg};
-  border-radius: 1.25rem;
 `;
 
-const ListItemPriceAndContent = styled.div`
-  //border: 0.0625rem solid red;
-  height: 100%;
-  padding: 10px;
+const ItemInfo = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-`;
-
-const ListButtonDelete = styled.button`
-  border: 1px solid black;
+  justify-content: center;
+  width: 100%;
+  padding: 0.625rem;
 `;
 
 const ListItems = styled.div`
-  //border: 0.0625rem solid black;
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: space-evenly;
+`;
+
+const ImageBox = styled.div`
+  flex-shrink: 0;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  margin: 8px;
+  border-radius: 17px;
+  background-color: ${({ theme }) => theme.color.nav_bg};
 `;
 
 const Image = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
+  width: 200px;
+  height: 200px;
+  padding: 8px;
+  object-fit: contain;
 `;
 
-const StyledLink = styled(Link)`
-  display: flelx;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+const Span = styled.span`
+  :not(:first-child) {
+    margin-top: 15px;
+  }
+  ${(props) =>
+    props.title &&
+    css`
+      font-size: 23px;
+    `}
 `;
 
 export default List;
