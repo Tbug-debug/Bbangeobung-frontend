@@ -18,6 +18,8 @@ import {
   showComment,
   postReport,
   editingComment,
+  likes,
+  showlikes,
 } from "../api/api";
 import Cookies from "js-cookie";
 
@@ -40,6 +42,12 @@ function Detail() {
   const [report, setReport] = useState("");
   const [edit, setEdit] = useState(true);
   const [ids, setIds] = useState("");
+  const userInfo = localStorage.getItem("userInfo");
+  const userId = JSON.parse(userInfo);
+
+  const { data: likeList } = useQuery("showLikeList", () =>
+    showlikes({ token: token, storeId: id, userId: userId.id })
+  );
 
   useEffect(() => {
     KakaoMapScript(data?.longitude, data?.latitude);
@@ -64,6 +72,12 @@ function Detail() {
   const editsComment = useMutation(editingComment, {
     onSuccess: () => {
       queryClient.invalidateQueries("showPostComment");
+    },
+  });
+
+  const likeButton = useMutation(likes, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("showLikeList");
     },
   });
 
@@ -113,6 +127,10 @@ function Detail() {
     editsComment.mutate({ token: token, commentId: ids, body: editBody });
   }
 
+  function clickLike() {
+    likeButton.mutate({ token: token, storeId: id });
+  }
+
   return (
     <DetailBox>
       <NavWrapper>
@@ -123,7 +141,14 @@ function Detail() {
         </Navbar>
         <BtnWrapper>
           <Navbar>
-            <FaHeart className="like_btn" size={30}></FaHeart>
+            <FaHeart
+              onClick={clickLike}
+              className="like_btn"
+              style={{
+                color: likeList?.data?.data?.isMyLike ? "#F96666" : "black",
+              }}
+              size={30}
+            ></FaHeart>
           </Navbar>
           <Navbar>
             <ReportIcon onClick={clickReport} size={37}></ReportIcon>

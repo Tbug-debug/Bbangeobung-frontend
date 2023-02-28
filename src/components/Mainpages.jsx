@@ -57,7 +57,7 @@ function Mainpages() {
           );
         })}
         <Navbar>
-          <FiMenu onClick={openMenuHandler} size={40} />
+          <SideMenue onClick={openMenuHandler} size={40} />
         </Navbar>
       </NavWrapper>
       {isLoading ? (
@@ -72,7 +72,6 @@ function Mainpages() {
                 imgURL={a.imageURL}
                 id={a.id}
                 categoryArr={a.itemList}
-                category={category}
               />
             );
           })}
@@ -94,6 +93,10 @@ const ListBox = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 80px;
+`;
+
+const SideMenue = styled(FiMenu)`
+  cursor: pointer;
 `;
 
 const LodingText = styled.span`

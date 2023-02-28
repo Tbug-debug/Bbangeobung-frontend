@@ -207,3 +207,34 @@ export const myStore = async ({ token }) => {
     console.log(error);
   }
 };
+
+export const likes = async ({ token, storeId }) => {
+  try {
+    const response = await axios.post(
+      `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/store/like/${storeId}`,
+      {},
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    console.log(response?.data);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const showlikes = async ({ token, storeId, userId }) => {
+  const response = await axios.get(
+    `https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/v2/store/${storeId}?userId=${userId}`,
+    {},
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+  return response;
+};
