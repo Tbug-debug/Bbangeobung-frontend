@@ -74,7 +74,7 @@ const BtnStyle = styled.button`
     props.categoryBtn &&
     css`
       width: 60px;
-      height: 35px;
+      height: 33px;
       background-color: #7b8fa1;
       color: white;
     `}
