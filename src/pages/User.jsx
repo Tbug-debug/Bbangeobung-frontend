@@ -5,10 +5,17 @@ import Navbar from "../components/Navbar";
 import { FiChevronLeft } from "react-icons/fi";
 import DefaultImage from "../components/DefaultImage";
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import { myStore } from "../api/api";
+import Cookies from "js-cookie";
+import List from "../components/List";
 
-function user() {
+function User() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
+  const token = Cookies.get("access_token");
+  const { data } = useQuery("myStoreList", () => myStore({ token }));
+  const myStoreListArr = data?.data;
+  console.log("myStoreListArr", myStoreListArr);
   return (
     <>
       <NavWrapper>
@@ -30,7 +37,20 @@ function user() {
             <h2>{userInfo.userEmail}</h2>
           </UserTextBox>
           <h2>내가 쓴 목록</h2>
-          <UserPostList></UserPostList>
+          <UserPostList>
+            {myStoreListArr?.map((item) => {
+              return (
+                <List
+                  key={item.id}
+                  contents={item.content}
+                  imgURL={item.imageURL}
+                  id={item.id}
+                  categoryArr={item.itemList}
+                  myStore="true"
+                ></List>
+              );
+            })}
+          </UserPostList>
         </UserInfoWrapper>
       </UserInfoContainer>
     </>
@@ -55,7 +75,8 @@ const UserInfoWrapper = styled.div`
 const UserTextBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 400px;
+  justify-content: center;
+  width: 100%;
   :first-child {
     margin-top: 20px;
   }
@@ -68,12 +89,12 @@ const UserTextBox = styled.div`
 
 const UserPostList = styled.div`
   margin-top: 20px;
-  width: 400px;
-  height: 400px;
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: ${({ theme }) => theme.color.item_bg};
   border-radius: 17px;
-  h2 {
-  }
 `;
 
-export default user;
+export default User;

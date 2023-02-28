@@ -190,3 +190,20 @@ export const editingComment = async ({ token, commentId, body }) => {
     console.log("postReport error", e);
   }
 };
+
+export const myStore = async ({ token }) => {
+  try {
+    const response = await axios.get(
+      "https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/api/v2/store/me",
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

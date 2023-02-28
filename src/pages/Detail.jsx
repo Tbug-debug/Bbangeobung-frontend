@@ -116,7 +116,7 @@ function Detail() {
     <DetailBox>
       <NavWrapper>
         <Navbar>
-          <Link to={"/"}>
+          <Link to={-1}>
             <FiChevronLeft size={40}></FiChevronLeft>
           </Link>
         </Navbar>

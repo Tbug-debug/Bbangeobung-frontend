@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-function List({ contents, imgURL, id, categoryArr, category }) {
+function List({ contents, imgURL, id, categoryArr, category, myStore }) {
   let copyArr = [...categoryArr];
 
   if (category === "팥") {
@@ -10,15 +10,14 @@ function List({ contents, imgURL, id, categoryArr, category }) {
   } else if (category === "슈크림") {
     copyArr = copyArr.filter((item) => !item.name.includes("팥붕어빵"));
   }
-
   return (
     <>
-      <ListLink to={`/detail/${id}`}>
+      <ListLink myStore={myStore} to={`/detail/${id}`}>
         <ListItems>
           <ImageBox>
             <Image src={imgURL} />
           </ImageBox>
-          <ItemInfo>
+          <ItemInfo myStore={myStore}>
             <Span title="true">가게 정보</Span>
             <Span>{contents}</Span>
             <Span title="true">가격 정보</Span>
@@ -41,6 +40,17 @@ const ListLink = styled(Link)`
   margin-top: 30px;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.color.item_bg};
+  ${(props) =>
+    props.myStore &&
+    css`
+      margin: 0;
+      padding: 15px 0;
+      background-color: none;
+      :not(:last-child) {
+        border-bottom: 1px solid black;
+        border-radius: 0;
+      }
+    `}
 `;
 
 const ItemInfo = styled.div`
