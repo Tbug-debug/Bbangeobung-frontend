@@ -2,14 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-function List({ contents, imgURL, id, categoryArr, category, mystorecss }) {
+function List({ contents, imgURL, id, categoryArr, mystorecss }) {
   let copyArr = [...categoryArr];
 
-  if (category === "팥") {
-    copyArr = copyArr.filter((item) => !item.name.includes("슈크림붕어빵"));
-  } else if (category === "슈크림") {
-    copyArr = copyArr.filter((item) => !item.name.includes("팥붕어빵"));
-  }
   return (
     <>
       <ListLink mystorecss={mystorecss} to={`/detail/${id}`}>
