@@ -12,7 +12,7 @@ import NavWrapper from "../components/NavWrapper";
 import Navbar from "../components/Navbar";
 import { FiChevronLeft } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { postStore } from "../api/api";
 import Cookies from "js-cookie";
 
@@ -28,6 +28,7 @@ function Register() {
   const [lati, setLati] = useState("");
   const [body, setBody] = useState("");
   const [formImagin, setFormformImagin] = useState(new FormData());
+  const queryClient = useQueryClient();
 
   function onSucces(position) {
     const lat = position.coords.latitude;
@@ -46,6 +47,7 @@ function Register() {
 
   const postStor = useMutation(postStore, {
     onSuccess: () => {
+      queryClient.invalidateQueries("list");
       navigate("/");
     },
   });

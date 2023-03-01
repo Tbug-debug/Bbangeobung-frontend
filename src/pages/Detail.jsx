@@ -9,6 +9,7 @@ import { FiChevronLeft, FiArrowUp } from "react-icons/fi";
 import { MdOutlineReport } from "react-icons/md";
 import KakaoMapScript from "../util/KakaoMapScript";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { FaHeart } from "react-icons/fa";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   deleteStore,
@@ -17,6 +18,8 @@ import {
   showComment,
   postReport,
   editingComment,
+  showlikes,
+  likes,
 } from "../api/api";
 import Cookies from "js-cookie";
 
@@ -25,27 +28,30 @@ function Detail() {
   const token = Cookies.get("access_token");
   const { id } = useParams();
   const queryClient = useQueryClient();
-  const { data } = useQuery(
-    ["showDetail", id],
-    () => showDetailStore({ id, token }),
-    { staleTime: 240000 }
-  );
-  const { data: commentList } = useQuery("showPostComment", () =>
-    showComment(id)
-  );
   const [modal, setModal] = useState(false);
   const [comment, setComment] = useState("");
   const [editComment, setEditComment] = useState("");
   const [report, setReport] = useState("");
   const [edit, setEdit] = useState(true);
   const [ids, setIds] = useState("");
+  const userInfo = localStorage.getItem("userInfo");
+  const userObjectInfo = JSON.parse(userInfo);
+  const userId = userObjectInfo.id;
 
+  const { data } = useQuery(["showDetail", id], () =>
+    showDetailStore({ id, token })
+  );
+
+  const { data: commentList } = useQuery("showPostComment", () =>
+    showComment(id)
+  );
   useEffect(() => {
     KakaoMapScript(data?.longitude, data?.latitude);
   }, [data?.latitude, data?.longitude]);
 
   const dlelteStoreItem = useMutation(deleteStore, {
     onSuccess: () => {
+      queryClient.invalidateQueries("showPostComment");
       navigate("/");
     },
   });
@@ -70,7 +76,18 @@ function Detail() {
     e.preventDefault();
     const commentInfo = { comment: comment, storeId: Number(id) };
     postingComment.mutate({ token, commentInfo });
+    setComment("");
   };
+
+  const { data: showLike } = useQuery("showLike", () =>
+    showlikes({ token: token, storeId: id, userId: userId })
+  );
+
+  const likeButton = useMutation(likes, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("showLike");
+    },
+  });
 
   function commentSet(e) {
     setComment(e.target.value);
@@ -110,6 +127,11 @@ function Detail() {
       storeId: id,
     };
     editsComment.mutate({ token: token, commentId: ids, body: editBody });
+    setEditComment("");
+  }
+
+  function clickLike() {
+    likeButton.mutate({ token: token, storeId: id });
   }
 
   return (
@@ -121,7 +143,16 @@ function Detail() {
           </Link>
         </Navbar>
         <BtnWrapper>
-          <Navbar></Navbar>
+          <Navbar>
+            <FaHeart
+              style={{
+                color: showLike?.data?.data.isMyLike ? "#F96666" : "black",
+              }}
+              onClick={clickLike}
+              size={30}
+            ></FaHeart>
+            <LikeCountSpan>{showLike?.data?.data.likeCount}</LikeCountSpan>
+          </Navbar>
           <Navbar>
             <ReportIcon onClick={clickReport} size={37}></ReportIcon>
           </Navbar>
@@ -378,6 +409,12 @@ const ModalTextArea = styled.textarea`
   resize: none;
   border-radius: 10px;
   outline: none;
+`;
+
+const LikeCountSpan = styled.span`
+  font-size: 30px;
+  position: absolute;
+  margin-left: 10px;
 `;
 
 export default Detail;

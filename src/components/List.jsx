@@ -2,9 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { useMutation, useQueryClient } from "react-query";
-import Cookies from "js-cookie";
-
 function List({ contents, imgURL, id, categoryArr, mystorecss, likeCount }) {
   let copyArr = [...categoryArr];
 
@@ -58,6 +55,20 @@ const ItemInfo = styled.div`
   width: 100%;
   padding: 0.625rem;
 `;
+
+// const HearIcon = styled.div`
+//   //border: 1px solid black;
+//   position: relative;
+//   top: 80px;
+//   left: 170px;
+//   display: flex;
+//   justify-content: center;
+//   span {
+//     margin-left: 10px;
+//     margin-bottom: 10px;
+//     font-size: 20px;
+//   }
+// `;
 
 const ListItems = styled.div`
   width: 100%;
