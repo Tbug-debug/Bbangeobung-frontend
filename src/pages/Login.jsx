@@ -21,7 +21,7 @@ function Login() {
     if (isLogin() === true) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   const idReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const [inputId, inputIdHandler, alertId, checkIdReg] = useLoginInput(

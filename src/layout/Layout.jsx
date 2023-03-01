@@ -15,7 +15,6 @@ const Layout = ({ children }) => {
               <h2>FE </h2>
               <h2>이한결</h2>
               <h2>이현동</h2>
-              <h2>최하영</h2>
             </div>
             <div>
               <h2>BE </h2>
