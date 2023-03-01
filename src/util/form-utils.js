@@ -81,7 +81,7 @@ export function getOutput(fields) {
     name: field.name,
     price:
       field.price === ""
-        ? alert("붕어빵 가격은 숫자 아니면 등록 불가붕어!")
+        ? (alert("붕어빵 가격은 숫자 아니면 등록 불가붕어!"), undefined)
         : field.price,
   }));
 }
