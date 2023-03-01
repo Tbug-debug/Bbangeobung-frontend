@@ -29,6 +29,7 @@ function Register() {
   const [body, setBody] = useState("");
   const [formImagin, setFormformImagin] = useState(new FormData());
   const queryClient = useQueryClient();
+  const [preview, setPreview] = useState("");
 
   function onSucces(position) {
     const lat = position.coords.latitude;
@@ -95,8 +96,18 @@ function Register() {
   function onChangeimge(e) {
     const img = e.target.files[0];
     const formImg = new FormData();
+    const reader = new FileReader();
     formImg.append("imageFile", img);
     setFormformImagin(formImg);
+    reader.onloadend = () => {
+      setPreview(reader.result);
+    };
+
+    if (img) {
+      reader.readAsDataURL(img);
+    } else {
+      setPreview("");
+    }
   }
 
   function handleSubmit() {
@@ -149,6 +160,18 @@ function Register() {
             <RegisterRegistorTitle>
               &lt;붕어빵 사진 아니면 IP 벤 ㅅㄱ&gt;
             </RegisterRegistorTitle>
+            {preview && (
+              <img
+                style={{
+                  width: "200px",
+                  height: "200px",
+                  borderRadius: "20px",
+                  marginBottom: "40px",
+                }}
+                src={preview}
+                alt="Preview"
+              />
+            )}
             <FileInput type="file" accept="image/*" onChange={onChangeimge} />
             <RegisterInputTitle>&lt;붕어빵 위치 좌표! &gt;</RegisterInputTitle>
             <PositonInput
