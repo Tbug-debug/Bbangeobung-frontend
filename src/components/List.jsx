@@ -1,30 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { FaHeart } from "react-icons/fa";
+
 import { useMutation, useQueryClient } from "react-query";
 import Cookies from "js-cookie";
-import { likes } from "../api/api";
 
 function List({ contents, imgURL, id, categoryArr, mystorecss, likeCount }) {
   let copyArr = [...categoryArr];
-  const token = Cookies.get("access_token");
-  const queryClient = useQueryClient();
 
-  const likeButton = useMutation(likes, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("list");
-    },
-  });
-  function clickLike() {
-    likeButton.mutate({ token: token, storeId: id });
-  }
   return (
     <>
-      <HearIcon>
-        <FaHeart onClick={clickLike} size={20}></FaHeart>
-        <span>{likeCount}</span>
-      </HearIcon>
       <ListLink mystorecss={mystorecss} to={`/detail/${id}`}>
         <ListItems>
           <ImageBox>
@@ -72,20 +57,6 @@ const ItemInfo = styled.div`
   justify-content: center;
   width: 100%;
   padding: 0.625rem;
-`;
-
-const HearIcon = styled.div`
-  //border: 1px solid black;
-  position: relative;
-  top: 80px;
-  left: 170px;
-  display: flex;
-  justify-content: center;
-  span {
-    margin-left: 10px;
-    margin-bottom: 10px;
-    font-size: 20px;
-  }
 `;
 
 const ListItems = styled.div`

@@ -17,8 +17,6 @@ import {
   showComment,
   postReport,
   editingComment,
-  likes,
-  showlikes,
 } from "../api/api";
 import Cookies from "js-cookie";
 
