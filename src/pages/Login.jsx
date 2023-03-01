@@ -7,7 +7,6 @@ import useLoginInput from "../hooks/useLoginInput";
 import { useMutation } from "react-query";
 import { postLogin } from "../api/api";
 import isLogin from "../util/token";
-import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
@@ -73,7 +72,6 @@ function Login() {
           <Btn signUp onClick={() => navigate("/signup")}>
             이메일로 회원가입
           </Btn>
-          <Btn kakao>카카오 회원 가입</Btn>
           <Btn type="submit" form="userInfoSubmit">
             로그인 하기
           </Btn>

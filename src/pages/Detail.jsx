@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import NavWrapper from "../components/NavWrapper";
 import CommentList from "../components/comment/CommentList";
 import CommentInput from "../components/comment/CommentInput";
+import ReportModal from "../components/modal/ReportModal";
 import { FiChevronLeft, FiArrowUp } from "react-icons/fi";
 import { MdOutlineReport } from "react-icons/md";
 import KakaoMapScript from "../util/KakaoMapScript";
@@ -20,6 +21,7 @@ import {
   editingComment,
   likes,
   showlikes,
+  commentReport,
 } from "../api/api";
 import Cookies from "js-cookie";
 
@@ -28,11 +30,12 @@ function Detail() {
   const token = Cookies.get("access_token");
   const { id } = useParams();
   const queryClient = useQueryClient();
-  const [modal, setModal] = useState(false);
-  const [openCommentReportModal, setCommentReportModal] = useState(false);
+  const [storeReportModal, setStoreReportModal] = useState(false);
+  const [commentReportModal, setCommentReportModal] = useState(false);
   const [comment, setComment] = useState("");
   const [editComment, setEditComment] = useState("");
-  const [report, setReport] = useState("");
+  const [storeReportReason, setStoreReportReason] = useState("");
+  const [commentReportReason, setCommentReportReason] = useState("");
   const [edit, setEdit] = useState(true);
   const [ids, setIds] = useState("");
   const userInfo = localStorage.getItem("userInfo");
@@ -73,6 +76,10 @@ function Detail() {
     },
   });
 
+  const commentReportQuery = useMutation(commentReport, {
+    onSuccess: () => {},
+  });
+
   const commentHandler = (e) => {
     e.preventDefault();
     const commentInfo = { comment: comment, storeId: Number(id) };
@@ -99,26 +106,44 @@ function Detail() {
   }
 
   const clickReport = () => {
-    setModal(!modal);
+    setStoreReportModal(!storeReportModal);
   };
 
   function onChangeReport(e) {
-    setReport(e.target.value);
+    setStoreReportReason(e.target.value);
   }
+
+  const onChangeCommentReportReason = (e) => {
+    setCommentReportReason(e.target.value);
+  };
 
   function submitReport(e) {
     e.preventDefault();
-    postingReport.mutate({ token: token, storeId: id, reason: report });
-    setModal(false);
+    postingReport.mutate({
+      token: token,
+      storeId: id,
+      reason: storeReportReason,
+    });
+    setStoreReportModal(false);
   }
+
+  const submitCommentReportReason = (e) => {
+    e.preventDefault();
+    commentReportQuery.mutate({
+      token: token,
+      commentId: ids,
+      reason: commentReportReason,
+    });
+  };
 
   function editHandler(id) {
     setEdit(!edit);
     setIds(id);
   }
 
-  function switchReportModalHandler() {
-    setCommentReportModal(!openCommentReportModal);
+  function clickReportModalHandler(id) {
+    setCommentReportModal(!commentReportModal);
+    setIds(id);
   }
 
   function changeEdit(e) {
@@ -138,6 +163,29 @@ function Detail() {
   function clickLike() {
     likeButton.mutate({ token: token, storeId: id });
   }
+
+  class reportProps {
+    constructor(inputValue, onChangeHandler, submitHandler, openHandler) {
+      this.inputValue = inputValue;
+      this.onChangeHandler = onChangeHandler;
+      this.submitHandler = submitHandler;
+      this.openHandler = openHandler;
+    }
+  }
+
+  const storeReportProps = new reportProps(
+    storeReportReason,
+    onChangeReport,
+    submitReport,
+    clickReport
+  );
+
+  const commentReportProps = new reportProps(
+    commentReportReason,
+    onChangeCommentReportReason,
+    submitCommentReportReason,
+    clickReportModalHandler
+  );
 
   return (
     <DetailBox>
@@ -188,7 +236,7 @@ function Detail() {
                 key={item.id}
                 edithand={editHandler}
                 item={item}
-                switchReportModalHandler={switchReportModalHandler}
+                clickReportModalHandler={clickReportModalHandler}
               ></CommentList>
             );
           })}
@@ -224,49 +272,15 @@ function Detail() {
             children={"이 붕어빵은 작성자만 삭제가능해요."}
           ></Btn>
         </DeleteContain>
-        {modal ? (
-          <Madalback>
-            <ModalContents>
-              <ModalTitleBox>
-                <ModalClose onClick={clickReport}>닫기</ModalClose>
-                <ModalTitle>게시글 신고 사유를 입력해주세붕어.</ModalTitle>
-              </ModalTitleBox>
-              <ModalTextAreaDiv>
-                <form onSubmit={submitReport}>
-                  <ModalTextArea
-                    value={report}
-                    onChange={onChangeReport}
-                    type="text"
-                  />
-                  <Btn small report children={"제출하기"}></Btn>
-                </form>
-              </ModalTextAreaDiv>
-            </ModalContents>
-          </Madalback>
-        ) : null}
-        {openCommentReportModal && (
-          <>
-            <Madalback>
-              <ModalContents>
-                <ModalTitleBox>
-                  <ModalClose onClick={switchReportModalHandler}>
-                    닫기
-                  </ModalClose>
-                  <ModalTitle>댓글 신고 사유를 입력해주세붕어.</ModalTitle>
-                </ModalTitleBox>
-                <ModalTextAreaDiv>
-                  <form onSubmit={submitReport}>
-                    <ModalTextArea
-                      value={report}
-                      onChange={onChangeReport}
-                      type="text"
-                    />
-                    <Btn small report children={"제출하기"}></Btn>
-                  </form>
-                </ModalTextAreaDiv>
-              </ModalContents>
-            </Madalback>
-          </>
+        {storeReportModal && (
+          <ReportModal props={storeReportProps}>
+            게시물 신고 사유를 입력해주세붕어
+          </ReportModal>
+        )}
+        {commentReportModal && (
+          <ReportModal props={commentReportProps}>
+            댓글 신고 사유를 입력해주세붕어.
+          </ReportModal>
         )}
       </DetailContentBox>
     </DetailBox>
@@ -375,70 +389,6 @@ const CommentForm = styled.form`
 
 const SubmitButton = styled(Btn)`
   background-color: ${({ theme }) => theme.color.btn_danger};
-`;
-
-const Madalback = styled.div`
-  position: absolute;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 11;
-`;
-
-const ModalTitleBox = styled.div`
-  //border: 0.0625rem solid black;
-  font-family: "KCC-Ganpan";
-`;
-
-const ModalClose = styled.span`
-  position: relative;
-  top: 10px;
-  left: 10px;
-  cursor: pointer;
-  :hover {
-    color: ${({ theme }) => theme.color.btn_danger};
-  }
-`;
-
-const ModalTitle = styled.span`
-  display: flex;
-  justify-content: center;
-  padding-top: 20px;
-`;
-
-const ModalContents = styled.div`
-  width: 400px;
-  height: 350px;
-  z-index: 999;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: ${({ theme }) => theme.color.btn_success};
-  border-radius: 10px;
-`;
-
-const ModalTextAreaDiv = styled.div`
-  height: 100%;
-  form {
-    margin-top: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-`;
-
-const ModalTextArea = styled.textarea`
-  width: 300px;
-  height: 150px;
-  resize: none;
-  border-radius: 10px;
-  outline: none;
 `;
 
 const LikeCountSpan = styled.span`
