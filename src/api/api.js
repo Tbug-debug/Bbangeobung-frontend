@@ -23,7 +23,7 @@ export const postLogin = async (data) => {
         userEmail: `${response.data.data.email}`,
       })
     );
-
+    console.log(response);
     HandleToken(response.headers.authorization);
   } catch (e) {
     alert(e.response.data.message);
