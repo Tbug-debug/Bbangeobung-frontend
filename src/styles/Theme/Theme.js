@@ -5,7 +5,6 @@ const color = {
   input_bg: "#F5F5F5",
 
   btn_sign_up: "#CCD0D4",
-  btn_kakao: "#FFE503",
   btn_success: "#64A8C6",
   btn_danger: "#F96666",
   btn_report: "#C66464",

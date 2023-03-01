@@ -2,12 +2,11 @@ import React, { useEffect } from "react";
 import Btn from "../components/Btn";
 import styled from "styled-components";
 import SignInput from "../components/SignInput";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useLoginInput from "../hooks/useLoginInput";
 import { useMutation } from "react-query";
 import { postLogin } from "../api/api";
 import isLogin from "../util/token";
-import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
@@ -55,24 +54,6 @@ function Login() {
     login.mutate(loginInfo);
   }
 
-  const kakaoLogin = async () => {
-    try {
-      const response = await axios.get(
-        "https://port-0-kikidy12-bbangeobung-backend-108dypx2aldzyvyjq.sel3.cloudtype.app/oauth2/authorization/kakao",
-        {},
-        {
-          headers: {
-            withCredentials: false,
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      );
-      console.log(response);
-    } catch (e) {
-      console.log("postStore", e);
-    }
-  };
-
   return (
     <>
       <LogInContainer>
@@ -90,9 +71,6 @@ function Login() {
         <BtnWrapper>
           <Btn signUp onClick={() => navigate("/signup")}>
             이메일로 회원가입
-          </Btn>
-          <Btn onClick={kakaoLogin} kakao>
-            카카오 회원 가입
           </Btn>
           <Btn type="submit" form="userInfoSubmit">
             로그인 하기
