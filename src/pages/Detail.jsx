@@ -29,6 +29,7 @@ function Detail() {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const [modal, setModal] = useState(false);
+  const [openCommentReportModal, setCommentReportModal] = useState(false);
   const [comment, setComment] = useState("");
   const [editComment, setEditComment] = useState("");
   const [report, setReport] = useState("");
@@ -116,6 +117,10 @@ function Detail() {
     setIds(id);
   }
 
+  function switchReportModalHandler() {
+    setCommentReportModal(!openCommentReportModal);
+  }
+
   function changeEdit(e) {
     setEditComment(e.target.value);
   }
@@ -183,6 +188,7 @@ function Detail() {
                 key={item.id}
                 edithand={editHandler}
                 item={item}
+                switchReportModalHandler={switchReportModalHandler}
               ></CommentList>
             );
           })}
@@ -223,7 +229,7 @@ function Detail() {
             <ModalContents>
               <ModalTitleBox>
                 <ModalClose onClick={clickReport}>닫기</ModalClose>
-                <ModalTitle>신고 사유를 입력해주세붕어.</ModalTitle>
+                <ModalTitle>게시글 신고 사유를 입력해주세붕어.</ModalTitle>
               </ModalTitleBox>
               <ModalTextAreaDiv>
                 <form onSubmit={submitReport}>
@@ -238,6 +244,30 @@ function Detail() {
             </ModalContents>
           </Madalback>
         ) : null}
+        {openCommentReportModal && (
+          <>
+            <Madalback>
+              <ModalContents>
+                <ModalTitleBox>
+                  <ModalClose onClick={switchReportModalHandler}>
+                    닫기
+                  </ModalClose>
+                  <ModalTitle>댓글 신고 사유를 입력해주세붕어.</ModalTitle>
+                </ModalTitleBox>
+                <ModalTextAreaDiv>
+                  <form onSubmit={submitReport}>
+                    <ModalTextArea
+                      value={report}
+                      onChange={onChangeReport}
+                      type="text"
+                    />
+                    <Btn small report children={"제출하기"}></Btn>
+                  </form>
+                </ModalTextAreaDiv>
+              </ModalContents>
+            </Madalback>
+          </>
+        )}
       </DetailContentBox>
     </DetailBox>
   );
