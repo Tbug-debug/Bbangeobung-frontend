@@ -14,10 +14,11 @@ const Input = styled.input`
   margin-top: 10px;
   padding-left: 12px;
   border: none;
-  border-radius: 12px;
+  border-radius: 4px;
   background-color: ${({ theme }) => theme.color.input_bg};
   font-size: 19px;
   font-weight: bold;
+  outline: none;
 `;
 
 export default SignInput;

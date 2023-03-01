@@ -56,20 +56,6 @@ const ItemInfo = styled.div`
   padding: 0.625rem;
 `;
 
-// const HearIcon = styled.div`
-//   //border: 1px solid black;
-//   position: relative;
-//   top: 80px;
-//   left: 170px;
-//   display: flex;
-//   justify-content: center;
-//   span {
-//     margin-left: 10px;
-//     margin-bottom: 10px;
-//     font-size: 20px;
-//   }
-// `;
-
 const ListItems = styled.div`
   width: 100%;
   height: 100%;

@@ -4,7 +4,7 @@ const color = {
   nav_bg: "#CEAB93",
   input_bg: "#F5F5F5",
 
-  btn_sign_up: "#CCD0D4",
+  btn_sign_up: "#393E46",
   btn_success: "#64A8C6",
   btn_danger: "#F96666",
   btn_report: "#C66464",

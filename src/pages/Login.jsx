@@ -72,7 +72,7 @@ function Login() {
           <Btn signUp onClick={() => navigate("/signup")}>
             이메일로 회원가입
           </Btn>
-          <Btn type="submit" form="userInfoSubmit">
+          <Btn signIn type="submit" form="userInfoSubmit">
             로그인 하기
           </Btn>
         </BtnWrapper>

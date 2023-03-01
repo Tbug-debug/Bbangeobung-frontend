@@ -16,7 +16,7 @@ const CommentList = ({ item, edithand, clickReportModalHandler }) => {
     if (localUserName.userName === item.username) {
       setCheckUser(true);
     }
-  }, []);
+  }, [localUserName.userName, item.username]);
 
   const deleteCommentQuery = useMutation(deleteComment, {
     onSuccess: () => {

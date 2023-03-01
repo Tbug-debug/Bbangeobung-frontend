@@ -1,4 +1,3 @@
-import axios from "axios";
 import HandleToken from "../util/HandleToken";
 import { acuxios } from "../util/axiosbase";
 
@@ -7,7 +6,7 @@ export const postRegister = async (data) => {
     const response = await acuxios.post("api/user/signup", data);
     alert(response.data.message);
   } catch (e) {
-    alert(e.response.data.message);
+    return e;
   }
 };
 
@@ -25,7 +24,7 @@ export const postLogin = async (data) => {
     );
     HandleToken(response.headers.authorization);
   } catch (e) {
-    alert(e.response.data.message);
+    return e;
   }
 };
 
@@ -34,7 +33,7 @@ export const showStore = async (category) => {
     const response = await acuxios.get(`api/v2/store/?itemName=${category}`);
     return response;
   } catch (e) {
-    console.log("showStore", e);
+    return e;
   }
 };
 
@@ -45,7 +44,7 @@ export const showDetailStore = async ({ id, token }) => {
     });
     return response.data.data;
   } catch (e) {
-    console.log("showDetailStore", e);
+    return e;
   }
 };
 
@@ -61,7 +60,7 @@ export const postStore = async ({ token, data }) => {
       response.data.code === 200 ? "붕어빵 생겼붕어!" : response.data.message
     );
   } catch (e) {
-    console.log("postStore", e);
+    return e;
   }
 };
 
@@ -110,7 +109,7 @@ export const showComment = async (storeId) => {
     const response = await acuxios.get(`api/comment/?storeId=${storeId}`);
     return response?.data.data;
   } catch (e) {
-    console.log("showComment error", e);
+    return e;
   }
 };
 
@@ -122,10 +121,9 @@ export const postReport = async ({ token, storeId, reason }) => {
         "Content-Type": "Application/json",
       },
     });
-    // alert(response.data.code === 200 ? "신고했붕어!" : "문제가 생겼붕어");
-    console.log(response);
+    alert(response?.data?.code === 200 ? "신고붕어" : "신고에 문제붕어!");
   } catch (e) {
-    console.log("postReport error", e);
+    return e;
   }
 };
 
@@ -139,7 +137,7 @@ export const deleteComment = async ({ token, commentId }) => {
     });
     alert(response.data.code === 200 ? "왜 리뷰 삭제붕어?" : "문제가 생겼붕어");
   } catch (e) {
-    console.log("postReport error", e);
+    return e;
   }
 };
 
@@ -153,7 +151,7 @@ export const editingComment = async ({ token, commentId, body }) => {
     });
     alert(response.data.code === 200 ? "리뷰 수정했붕어" : "문제가 생겼붕어");
   } catch (e) {
-    console.log("postReport error", e);
+    return e;
   }
 };
 
@@ -171,7 +169,7 @@ export const commentReport = async ({ token, commentId, reason }) => {
     );
     alert(response.data.code === 200 ? "댓글 신고 완료" : "에러");
   } catch (e) {
-    console.log("commentReportError", e);
+    return e;
   }
 };
 
@@ -184,8 +182,8 @@ export const myStore = async ({ token }) => {
       },
     });
     return response?.data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 
@@ -202,8 +200,8 @@ export const likes = async ({ token, storeId }) => {
     );
 
     return response;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 
@@ -220,6 +218,6 @@ export const showlikes = async ({ token, storeId, userId }) => {
     );
     return response;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };

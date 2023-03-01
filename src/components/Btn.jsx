@@ -36,6 +36,9 @@ const BtnStyle = styled.button`
     css`
       background-color: ${({ theme }) => theme.color.btn_sign_up};
       color: white;
+      &:hover {
+        box-shadow: 2px 2px rgb(0, 0, 0, 0.3);
+      }
     `}
   ${(props) =>
     props.kakao &&
@@ -84,6 +87,15 @@ const BtnStyle = styled.button`
       width: 60px;
       height: 39px;
       background-color: ${({ theme }) => theme.color.btn_success};
+    `}
+    ${(props) =>
+    props.signIn &&
+    css`
+      background-color: ${({ theme }) => theme.color.btn_success};
+      color: black;
+      &:hover {
+        box-shadow: 2px 2px rgb(0, 0, 0, 0.3);
+      }
     `}
 `;
 
