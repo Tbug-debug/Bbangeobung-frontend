@@ -110,6 +110,11 @@ function Register() {
       return;
     }
 
+    if (long === "" || lati === "") {
+      alert("붕어빵 위치 알려붕어");
+      return;
+    }
+
     const output = getOutput(fields);
     const result = JSON.stringify(output);
     const formData = new FormData();
