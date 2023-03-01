@@ -101,7 +101,7 @@ function Register() {
 
   function handleSubmit() {
     if (body.length === 0) {
-      alert("왜 입력 안하붕어?");
+      alert("왜 입력 안붕어?");
       return;
     }
 
