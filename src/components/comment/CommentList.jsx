@@ -52,13 +52,17 @@ const CommentList = ({ item, edithand, clickReportModalHandler }) => {
               </CommentSpan>
             </>
           )}
-          <CommentSpan>
-            <MdOutlineReport
-              onClick={() => clickReportModalHandler(item.id)}
-              className="report"
-              size={25}
-            />
-          </CommentSpan>
+          {!checkUser && (
+            <>
+              <CommentSpan>
+                <MdOutlineReport
+                  onClick={() => clickReportModalHandler(item.id)}
+                  className="report"
+                  size={25}
+                />
+              </CommentSpan>
+            </>
+          )}
         </div>
       </CommentListItem>
     </>
