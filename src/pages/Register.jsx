@@ -106,7 +106,7 @@ function Register() {
     }
 
     if (body.length >= 10) {
-      alert("붕어빵 가게 이름은 10글자 이하로 해주붕어!.");
+      alert("붕어빵 가게 이름은 10글자 이하로 해붕어!.");
       return;
     }
 
