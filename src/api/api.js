@@ -123,7 +123,8 @@ export const postReport = async ({ token, storeId, reason }) => {
         "Content-Type": "Application/json",
       },
     });
-    alert(response.data.code === 200 ? "신고했붕어!" : "문제가 생겼붕어");
+    // alert(response.data.code === 200 ? "신고했붕어!" : "문제가 생겼붕어");
+    console.log(response);
   } catch (e) {
     console.log("postReport error", e);
   }
@@ -154,6 +155,24 @@ export const editingComment = async ({ token, commentId, body }) => {
     alert(response.data.code === 200 ? "리뷰 수정했붕어" : "문제가 생겼붕어");
   } catch (e) {
     console.log("postReport error", e);
+  }
+};
+
+export const commentReport = async ({ token, commentId, reason }) => {
+  try {
+    const response = await acuxios.post(
+      `api/report/comment/${commentId}`,
+      { reason: reason, commentId: commentId },
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    alert(response.data.code === 200 ? "댓글 신고 완료" : "에러");
+  } catch (e) {
+    console.log("commentReportError", e);
   }
 };
 

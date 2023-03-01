@@ -6,11 +6,10 @@ import { deleteComment } from "../../api/api";
 import { useMutation, useQueryClient } from "react-query";
 import Cookies from "js-cookie";
 
-const CommentList = ({ item, edithand, switchReportModalHandler }) => {
+const CommentList = ({ item, edithand, clickReportModalHandler }) => {
   const localUserName = JSON.parse(localStorage.getItem("userInfo"));
   const token = Cookies.get("access_token");
   const queryClient = useQueryClient();
-
   const [checkUser, setCheckUser] = useState(false);
 
   useEffect(() => {
@@ -55,7 +54,7 @@ const CommentList = ({ item, edithand, switchReportModalHandler }) => {
           )}
           <CommentSpan>
             <MdOutlineReport
-              onClick={() => switchReportModalHandler()}
+              onClick={() => clickReportModalHandler(item.id)}
               className="report"
               size={25}
             />
