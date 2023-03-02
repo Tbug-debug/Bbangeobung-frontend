@@ -10,6 +10,7 @@ import NavWrapper from "./NavWrapper";
 import Menu from "./Menu";
 import isLogin from "../util/token";
 import Btn from "./Btn";
+import { useInView } from "react-intersection-observer";
 
 function Mainpages() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -60,9 +61,7 @@ function Mainpages() {
           <SideMenue onClick={openMenuHandler} size={40} />
         </Navbar>
       </NavWrapper>
-      {isLoading ? (
-        <LodingText>붕어빵 로딩중이에붕어</LodingText>
-      ) : (
+      {
         <ListBox>
           {data?.data?.data.map((a) => {
             return (
@@ -76,7 +75,7 @@ function Mainpages() {
             );
           })}
         </ListBox>
-      )}
+      }
       {openMenu && <Menu onClose={() => setOpenMenu(false)}></Menu>}
     </MainPageList>
   );
