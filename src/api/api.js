@@ -6,7 +6,11 @@ export const postRegister = async (data) => {
     const response = await acuxios.post("api/user/signup", data);
     alert(response.data.message);
   } catch (e) {
-    return e;
+    alert(
+      e.response.data.code === 400
+        ? "붕어빵이 이미 존재하거나 형식이 잘못되었붕어"
+        : e.response.data.message
+    );
   }
 };
 
@@ -24,7 +28,11 @@ export const postLogin = async (data) => {
     );
     HandleToken(response.headers.authorization);
   } catch (e) {
-    return e;
+    alert(
+      e.response.data.code === 400
+        ? "붕어빵이 계정이 존재하지 않거나 형식이 잘못되었붕어"
+        : e.response.data.message
+    );
   }
 };
 
